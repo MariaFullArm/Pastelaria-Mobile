@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    >
+
+    <Button
+        android:id="@+id/botao_cadastro_venda_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/ic_botao_main_personalizado"
+        android:text="Cadastrar Venda"
+        android:textAllCaps="false"
+        android:textColor="@color/corDoTextoPersonalizado"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/botao_lista_vendedor_main"
+        app:layout_constraintEnd_toEndOf="@+id/botao_historico_main"
+        app:layout_constraintStart_toStartOf="@+id/botao_historico_main"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botao_lista_vendedor_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/ic_botao_main_personalizado"
+        android:text="Lista de Vendedores"
+        android:textAllCaps="false"
+        android:textColor="@color/corDoTextoPersonalizado"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/botao_lista_produto_main"
+        app:layout_constraintEnd_toEndOf="@+id/botao_lista_produto_main"
+        app:layout_constraintStart_toStartOf="@+id/botao_lista_produto_main"
+        app:layout_constraintTop_toBottomOf="@+id/botao_cadastro_venda_main" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/botao_adiciona_vendedor_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src= "@drawable/ic_action_add"
+        app:layout_constraintBottom_toBottomOf="@+id/botao_lista_vendedor_main"
+        app:layout_constraintEnd_toEndOf="@+id/botao_historico_main"
+        app:layout_constraintStart_toEndOf="@+id/botao_lista_vendedor_main"
+        app:layout_constraintTop_toTopOf="@+id/botao_lista_vendedor_main" />
+
+    <Button
+        android:id="@+id/botao_lista_produto_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/ic_botao_main_personalizado"
+        android:text="Lista de Produtos"
+        android:textAllCaps="false"
+        android:textColor="@color/corDoTextoPersonalizado"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/botao_historico_main"
+        app:layout_constraintEnd_toStartOf="@+id/botao_adiciona_produto_main"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/botao_historico_main"
+        app:layout_constraintTop_toBottomOf="@+id/botao_lista_vendedor_main" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/botao_adiciona_produto_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_action_add"
+        app:layout_constraintBottom_toBottomOf="@id/botao_lista_produto_main"
+        app:layout_constraintEnd_toEndOf="@+id/botao_historico_main"
+        app:layout_constraintStart_toEndOf="@id/botao_lista_produto_main"
+        app:layout_constraintTop_toTopOf="@+id/botao_lista_produto_main" />
+
+    <Button
+        android:id="@+id/botao_historico_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="35dp"
+        android:background="@drawable/ic_botao_main_personalizado"
+        android:text="Histórico"
+        android:textAllCaps="false"
+        android:textColor="@color/corDoTextoPersonalizado"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botao_lista_produto_main" />
+
+
+</android.support.constraint.ConstraintLayout>

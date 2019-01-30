@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fae184</color>
+    <color name="colorPrimaryDark">#f99c4f</color>
+    <color name="colorAccent">#a9a9a9</color>
+    <color name="corDoTextoPersonalizado">#ee3732</color>
+    <color name="corDoBotaoPersonalizado">#fff346</color>
+</resources>

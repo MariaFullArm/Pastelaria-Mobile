@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.FormularioProdutoActivity">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selecionar Tipo do produto"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textColor="#7b7b7b"/>
+
+    <Spinner
+        android:id="@+id/formulario_produto_tipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text" />
+
+    <EditText
+        android:id="@+id/formulario_produto_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="Nome"
+        android:inputType="text"
+        android:maxLength="60"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@id/formulario_produto_tipo"
+        app:layout_constraintStart_toStartOf="@id/formulario_produto_tipo"
+        app:layout_constraintTop_toBottomOf="@id/formulario_produto_tipo" />
+
+    <EditText
+        android:id="@+id/formulario_produto_preco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="Valor do Produto"
+        android:inputType="numberDecimal"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@id/formulario_produto_nome"
+        app:layout_constraintTop_toBottomOf="@id/formulario_produto_nome" />
+
+    <EditText
+        android:id="@+id/formulario_produto_descricao"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:gravity="top"
+        android:hint="Descrição"
+        android:maxLines="15"
+        android:maxLength="150"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@id/formulario_produto_botao_salvar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/formulario_produto_preco" />
+
+    <Button
+        android:id="@+id/formulario_produto_botao_salvar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/ic_botao_verde_personalizado"
+        android:text="Salvar"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
