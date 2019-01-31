@@ -3,18 +3,22 @@ package br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
+import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioVendedorActivity;
 import br.com.fulltime.projeto.foodtruck.util.MoedaUtil;
 
 public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAdapter.SelecaoProdutoViewHolder> {
@@ -46,15 +50,17 @@ public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAd
         return produtos.size();
     }
 
-    public class SelecaoProdutoViewHolder extends RecyclerView.ViewHolder {
+    public class SelecaoProdutoViewHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener {
 
         private final TextView nome;
         private final Spinner spinner;
         private final TextView preco;
+        private int quantidade = 0;
         private Produto produto;
 
         public SelecaoProdutoViewHolder(@NonNull View itemView) {
             super(itemView);
+
 
             nome = itemView.findViewById(R.id.item_venda_nome_produto);
             spinner = itemView.findViewById(R.id.item_venda_spinner);
@@ -75,14 +81,26 @@ public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAd
         private void preencheCampo(Produto produto) {
             nome.setText(produto.getNome());
             preco.setText(MoedaUtil.formataParaBrasileiro(produto.getValor()));
-            List<String> tipos = new ArrayList<String>();
-            tipos.add("0");tipos.add("1");tipos.add("2");tipos.add("3");tipos.add("4");tipos.add("5");tipos.add("6");tipos.add("7");tipos.add("8");tipos.add("9");tipos.add("10");
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                    android.R.layout.simple_spinner_item, tipos);
+            List<Integer> quantidadeProduto = new ArrayList<>();
+            quantidadeProduto.add(0);quantidadeProduto.add(1);quantidadeProduto.add(2);quantidadeProduto.add(3);quantidadeProduto.add(4);quantidadeProduto.add(5);quantidadeProduto.add(6);quantidadeProduto.add(7);quantidadeProduto.add(8);quantidadeProduto.add(9);quantidadeProduto.add(10);
+
+            ArrayAdapter<Integer> adapter = new ArrayAdapter<>(context,
+                    android.R.layout.simple_spinner_item, quantidadeProduto);
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//            quantidade = ((Integer) parent.getItemAtPosition(position));
+            Toast.makeText(context, "clicado", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
         }
     }
 }

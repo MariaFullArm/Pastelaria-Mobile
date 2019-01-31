@@ -84,7 +84,6 @@ public class ListaProdutoFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-
             if (ehRequisicaoParaAdicionarVendedorComResultado(requestCode, data)) {
                 Produto produtoRecebido = (Produto) data.getSerializableExtra(CHAVE_PRODUTO);
                 Toast.makeText(getContext(),
@@ -117,7 +116,7 @@ public class ListaProdutoFragment extends Fragment {
 
     private boolean ehRequisicaoParaAdicionarVendedorComResultado(int requestCode, Intent intent) {
         if (intent.hasExtra(CHAVE_PRODUTO)) {
-            return requestCode == CODIGO_DE_REQUISICAO_LISTA_PRODUTO || requestCode == CODIGO_DE_REQUISICAO_PRODUTO_MAIN;
+            return requestCode == CODIGO_DE_REQUISICAO_LISTA_PRODUTO;
         }
         return false;
     }

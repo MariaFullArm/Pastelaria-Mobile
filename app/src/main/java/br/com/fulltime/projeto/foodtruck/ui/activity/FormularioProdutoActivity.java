@@ -29,7 +29,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
     public static final String TITLE_TOOLBAR_ALTERAR = "Alterar Produto";
     public static final String TITLE_TOOLBAR_ADICIONAR = "Adicionar Produto";
     private int posicaoRecibida = CODIGO_POSICAO_INVALIDA;
-    private Spinner campoTipo;
+    private Spinner spinnerTipo;
     private EditText campoNome;
     private EditText campoValor;
     private EditText campoDescricao;
@@ -86,8 +86,8 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
     }
 
     public void inicializaCampos() {
-        campoTipo = findViewById(R.id.formulario_produto_tipo);
-        campoTipo.setOnItemSelectedListener(this);
+        spinnerTipo = findViewById(R.id.formulario_produto_tipo);
+        spinnerTipo.setOnItemSelectedListener(this);
         campoNome = findViewById(R.id.formulario_produto_nome);
         campoValor = findViewById(R.id.formulario_produto_preco);
         campoDescricao = findViewById(R.id.formulario_produto_descricao);
@@ -104,7 +104,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
                 android.R.layout.simple_spinner_item, tipos);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        campoTipo.setAdapter(adapter);
+        spinnerTipo.setAdapter(adapter);
     }
 
 

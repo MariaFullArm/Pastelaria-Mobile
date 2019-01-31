@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorC
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CHAVE_VENDEDOR;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CODIGO_DE_REQUISICAO_ALTERA_VENDEDOR;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CODIGO_DE_REQUISICAO_LISTA_VENDEDOR;
-import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CODIGO_DE_REQUISICAO_VENDEDOR_MAIN;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CODIGO_POSICAO_INVALIDA;
 
 public class ListaVendedoresFragment extends MainFragment {
@@ -45,7 +43,7 @@ public class ListaVendedoresFragment extends MainFragment {
         return view;
     }
 
-    private void configuraRecyclerView(View view,List<Vendedor> vendedores) {
+    private void configuraRecyclerView(View view, List<Vendedor> vendedores) {
         RecyclerView listaVendedor = view.findViewById(R.id.lista_vendedor_recyclerview);
         configuraAdapter(vendedores, listaVendedor);
     }
@@ -100,15 +98,15 @@ public class ListaVendedoresFragment extends MainFragment {
                 adapter.adiciona(vendedorRecebido);
 
             }
+
             if (ehRequisicaoParaAlterarVendedorComResultado(requestCode, data)) {
                 Vendedor vendedorRecebido = (Vendedor) data.getSerializableExtra(CHAVE_VENDEDOR);
                 int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
-                Toast.makeText(getContext(),
-                        "Vendedor " + vendedorRecebido.getNome() + " Foi Alterado", Toast.LENGTH_SHORT).show();
 
                 if (posicaoRecebida > CODIGO_POSICAO_INVALIDA) {
-                    VendedorDAO dao = new VendedorDAO();
-                    dao.altera(vendedorRecebido, posicaoRecebida);
+                    Toast.makeText(getContext(),
+                            "Vendedor " + vendedorRecebido.getNome() + " Foi Alterado", Toast.LENGTH_SHORT).show();
+                    new VendedorDAO().altera(vendedorRecebido, posicaoRecebida);
                     adapter.altera(vendedorRecebido, posicaoRecebida);
                 }
             }
@@ -124,7 +122,7 @@ public class ListaVendedoresFragment extends MainFragment {
 
     private boolean ehRequisicaoParaAdicionarVendedorComResultado(int requestCode, Intent intent) {
         if (intent.hasExtra(CHAVE_VENDEDOR)) {
-            return requestCode == CODIGO_DE_REQUISICAO_LISTA_VENDEDOR || requestCode == CODIGO_DE_REQUISICAO_VENDEDOR_MAIN;
+            return requestCode == CODIGO_DE_REQUISICAO_LISTA_VENDEDOR;
         }
         return false;
     }

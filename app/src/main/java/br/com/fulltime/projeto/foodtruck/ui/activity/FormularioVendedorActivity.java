@@ -73,8 +73,7 @@ public class FormularioVendedorActivity extends AppCompatActivity {
         String cpf = campoCPF.getText().toString();
         String nome = campoNome.getText().toString();
         Vendedor vendedor = new Vendedor();
-        String cpfFormatado = new CpfUtil().formataCPF(cpf);
-        vendedor.setCpf(cpfFormatado);
+        vendedor.setCpf(cpf);
         vendedor.setNome(nome);
 
         return vendedor;

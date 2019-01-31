@@ -19,7 +19,7 @@
             android:id="@+id/formulario_vendedor_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="NOME"
+            android:hint="Nome"
             android:textSize="18dp"
             android:maxLength="50"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
             android:id="@+id/formulario_vendedor_cpf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CPF"
+            android:hint="cpf"
             android:maxLength="11"
             android:textSize="24sp" />
     </android.support.design.widget.TextInputLayout>

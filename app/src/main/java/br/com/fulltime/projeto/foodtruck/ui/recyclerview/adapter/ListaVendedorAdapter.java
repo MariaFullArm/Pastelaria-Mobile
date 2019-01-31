@@ -13,6 +13,7 @@ import java.util.List;
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.listener.OnItemClickListenerVendedor;
+import br.com.fulltime.projeto.foodtruck.util.CpfUtil;
 
 public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdapter.VendedorViewHolder> {
 
@@ -90,7 +91,8 @@ public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdap
 
         private void preencheCampo(Vendedor vendedor) {
             nome.setText(vendedor.getNome());
-            cpf.setText(vendedor.getCpf());
+            String cpfFormatado = new CpfUtil().formataCPF(vendedor.getCpf());
+            cpf.setText(cpfFormatado);
         }
     }
 }
