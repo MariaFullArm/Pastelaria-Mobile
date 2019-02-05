@@ -1,8 +1,11 @@
 package br.com.fulltime.projeto.foodtruck.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Produto implements Serializable {
 
     private int id;
@@ -11,7 +14,7 @@ public class Produto implements Serializable {
     private BigDecimal valor;
     private String descricao;
 
-    public Produto(String tipo, String nome, BigDecimal valor, String descricao) {
+    public void criaProdutoSemId(String tipo, String nome, BigDecimal valor, String descricao){
         this.tipo = tipo;
         this.nome = nome;
         this.valor = valor;

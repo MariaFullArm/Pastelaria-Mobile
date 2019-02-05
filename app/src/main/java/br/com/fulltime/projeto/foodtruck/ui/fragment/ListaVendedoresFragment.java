@@ -19,7 +19,7 @@ import br.com.fulltime.projeto.foodtruck.dao.VendedorDAO;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioVendedorActivity;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.ListaVendedorAdapter;
-import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.listener.OnItemClickListenerVendedor;
+import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerVendedor;
 
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CHAVE_POSICAO;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CHAVE_VENDEDOR;

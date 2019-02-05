@@ -4,21 +4,24 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
-import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.listener.OnItemClickListenerProduto;
+import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerProduto;
 import br.com.fulltime.projeto.foodtruck.util.MoedaUtil;
 
 public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapter.ProdutoViewHolder> {
 
     private final Context context;
-    private final List<Produto> produtos;
+    private List<Produto> produtos;
     private OnItemClickListenerProduto onItemClickListenerProduto;
 
     public ListaProdutoAdapter(Context context, List<Produto> produtos) {
@@ -26,7 +29,7 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
         this.produtos = produtos;
     }
 
-    public void setOnItemClickListenerProduto(OnItemClickListenerProduto onItemClickListenerProduto){
+    public void setOnItemClickListenerProduto(OnItemClickListenerProduto onItemClickListenerProduto) {
         this.onItemClickListenerProduto = onItemClickListenerProduto;
     }
 
@@ -64,23 +67,50 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
         notifyItemRemoved(posicao);
     }
 
+    public void substituiLista(List<Produto> produtos) {
+        this.produtos = produtos;
+        notifyDataSetChanged();
+    }
+
     public class ProdutoViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView nome;
         private final TextView tipo;
         private final TextView preco;
+        private final ImageView menu;
         private Produto produto;
 
-        public ProdutoViewHolder(@NonNull View itemView) {
+        public ProdutoViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             nome = itemView.findViewById(R.id.item_produto_nome);
             tipo = itemView.findViewById(R.id.item_produto_tipo);
             preco = itemView.findViewById(R.id.item_produto_preco);
+            menu = itemView.findViewById(R.id.item_produto_menu);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onItemClickListenerProduto.onItemClick(produto, getAdapterPosition());
+                }
+            });
+            menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(context, menu);
+
+                    popup.inflate(R.menu.menu_opcao_produtos);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.produto_deletar:
+                                    onItemClickListenerProduto.onItemClickDeletar(produto, getAdapterPosition());
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popup.show();
                 }
             });
         }

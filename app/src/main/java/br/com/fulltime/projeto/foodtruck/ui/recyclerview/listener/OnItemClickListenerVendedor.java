@@ -1,4 +1,4 @@
-package br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.listener;
+package br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener;
 
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 

@@ -4,11 +4,11 @@ import br.com.fulltime.projeto.foodtruck.service.ProdutoService;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class RetrofitInicializador {
+public class RetrofitConfig {
 
     private final Retrofit retrofit;
 
-    public RetrofitInicializador() {
+    public RetrofitConfig() {
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.17.196.132/pastelaria/api.php/")
                 .addConverterFactory(JacksonConverterFactory.create())

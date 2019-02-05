@@ -1,6 +1,8 @@
 package br.com.fulltime.projeto.foodtruck.modelo;
 
-public class ItemVenda {
+import java.io.Serializable;
+
+public class ItemVenda implements Serializable {
 
     private int id;
     private Produto produto;
@@ -44,4 +46,5 @@ public class ItemVenda {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
 }

@@ -61,7 +61,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
                             "O formulario não foi prenchido corretamente", Toast.LENGTH_SHORT).show();
                 } else {
                     Produto produtoCriado = criaProduto();
-                    retornaProduto(produtoCriado);
+                    enviaProduto(produtoCriado);
                     finish();
                 }
             }
@@ -69,9 +69,9 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         });
     }
 
-    private void retornaProduto(Produto produtoCriado) {
+    private void enviaProduto(Produto produto) {
         Intent intent = new Intent();
-        intent.putExtra(CHAVE_PRODUTO, produtoCriado);
+        intent.putExtra(CHAVE_PRODUTO, produto);
         intent.putExtra(CHAVE_POSICAO, posicaoRecibida);
         setResult(Activity.RESULT_OK, intent);
     }
@@ -82,7 +82,9 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         String descricao = campoDescricao.getText().toString();
         String valorString = campoValor.getText().toString();
         BigDecimal valorReal = MoedaUtil.validaMoeda(valorString);
-        return new Produto(tipo, nome, valorReal, descricao);
+        Produto produto = new Produto();
+        produto.criaProdutoSemId(tipo, nome, valorReal, descricao);
+        return produto;
     }
 
     public void inicializaCampos() {
@@ -97,7 +99,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
 
     private void configuraSpinner() {
         List<String> tipos = new ArrayList<String>();
-        tipos.add("Comida");
+        tipos.add("Pastel");
         tipos.add("Bebida");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

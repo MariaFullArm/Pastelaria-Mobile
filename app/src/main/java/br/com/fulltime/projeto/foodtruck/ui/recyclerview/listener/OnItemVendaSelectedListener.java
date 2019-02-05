@@ -1,11 +1,9 @@
-package br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.listener;
+package br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener;
 
-import android.view.View;
-import android.widget.AdapterView;
+import br.com.fulltime.projeto.foodtruck.modelo.ItemVenda;
 
-public interface OnItemSelectedListener extends AdapterView.OnItemSelectedListener {
+public interface OnItemVendaSelectedListener {
 
-     void onItemSelected(AdapterView<?> parent, View view, int position, long id);
+    void onItemVendaSelected(ItemVenda item, int posicao, int quantidade);
 
-
-    void onNothingSelected(AdapterView<?> parent);
+}

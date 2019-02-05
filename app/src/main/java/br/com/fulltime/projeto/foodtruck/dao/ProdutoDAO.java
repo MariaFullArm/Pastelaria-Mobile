@@ -7,7 +7,7 @@ import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
 
-public class ProdutoDAO  {
+public class ProdutoDAO {
 
     private final static ArrayList<Produto> produtos = new ArrayList<>();
 
@@ -17,6 +17,13 @@ public class ProdutoDAO  {
 
     public void insere(Produto... produtos) {
         ProdutoDAO.produtos.addAll(Arrays.asList(produtos));
+    }
+
+    public void insereTudo(List<Produto> lista) {
+        removeTodos();
+        for (Produto produto :lista) {
+            insere(produto);
+        }
     }
 
     public void altera(Produto produto, int posicao) {

@@ -8,28 +8,28 @@
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selecionar Tipo do produto"
+        android:text="Tipo do produto:"
         android:gravity="center"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:textColor="#7b7b7b"/>
+        android:padding="8dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Spinner
         android:id="@+id/formulario_produto_tipo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text" />
+        app:layout_constraintStart_toEndOf="@id/text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/text"/>
 
     <EditText
         android:id="@+id/formulario_produto_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="8dp"
         android:hint="Nome"
         android:inputType="text"
         android:maxLength="60"
@@ -56,9 +56,11 @@
         android:layout_margin="15dp"
         android:gravity="top"
         android:hint="Descrição"
+        android:padding="8dp"
         android:maxLines="15"
         android:maxLength="150"
         android:textSize="20dp"
+        android:background="@drawable/borda"
         app:layout_constraintBottom_toTopOf="@id/formulario_produto_botao_salvar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

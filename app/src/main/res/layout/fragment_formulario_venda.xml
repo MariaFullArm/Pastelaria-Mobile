@@ -17,12 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/formulario_venda_lista_produtos"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:footerDividersEnabled="true"
-                android:maxHeight="250dp"
+                android:layout_height="150dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,20 +48,21 @@
                 android:id="@+id/formulario_venda_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Selecionar Vendedor"
+                android:layout_margin="8dp"
+                android:text="Vendedor: "
                 android:textAllCaps="false"
-                android:textColor="#7b7b7b"
+                android:textColor="#212121"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/formulario_venda_botao_selecionar_produto" />
 
             <Spinner
                 android:id="@+id/formulario_venda_spinner_vendedor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/formulario_venda_text" />
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/formulario_venda_text"
+                app:layout_constraintStart_toEndOf="@id/formulario_venda_text" />
 
             <View
                 android:layout_width="match_parent"
@@ -118,17 +117,16 @@
                 app:layout_constraintTop_toTopOf="@id/formulario_venda_input_data" />
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="8dp"
                 android:background="@drawable/ic_botao_verde_personalizado"
                 android:text="Salvar"
                 android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/formulario_venda_total" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/formulario_venda_input_data" />
 
         </android.support.constraint.ConstraintLayout>
 
