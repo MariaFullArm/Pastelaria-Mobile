@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
-import br.com.fulltime.projeto.foodtruck.dao.ProdutoDAO;
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
 import br.com.fulltime.projeto.foodtruck.retrofit.RetrofitConfig;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioProdutoActivity;
@@ -46,7 +44,7 @@ public class ListaProdutoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_produto, container, false);
 
-        ((MainActivity)getActivity()).setToolbarTiltle("Lista de Produtos");
+        ((MainActivity) getActivity()).setToolbarTiltle("Lista de Produtos");
         configuraBotaoAdicionarProduto(view);
         produtos = new ArrayList<>();
         configuraRecyclerView(view);
@@ -140,21 +138,33 @@ public class ListaProdutoFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(getContext(), "Não foi possivel se conectar a API", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Ocorreu um erro no cadastro do produto", Toast.LENGTH_LONG).show();
 
                     }
                 });
             }
 
             if (ehRequisicaoParaAlterarProdutoComResultado(requestCode, data)) {
-                Produto produtoRecebido = (Produto) data.getSerializableExtra(CHAVE_PRODUTO);
-                int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
+                final Produto produtoRecebido = (Produto) data.getSerializableExtra(CHAVE_PRODUTO);
+                final int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
 
                 if (posicaoRecebida > CODIGO_POSICAO_INVALIDA) {
-                    Toast.makeText(getContext(),
-                            "Produto alterado com sucesso", Toast.LENGTH_SHORT).show();
-                    new ProdutoDAO().altera(produtoRecebido, posicaoRecebida);
-                    adapter.altera(produtoRecebido, posicaoRecebida);
+                    Call<Produto> call = new RetrofitConfig().getProdutoService().altera(produtoRecebido.getId(), produtoRecebido);
+                    call.enqueue(new Callback<Produto>() {
+                        @Override
+                        public void onResponse(Call<Produto> call, Response<Produto> response) {
+                            Produto produtoDaApi = response.body();
+                            Toast.makeText(getContext(),
+                                    "Produto alterado com sucesso", Toast.LENGTH_SHORT).show();
+
+                            adapter.altera(produtoDaApi, posicaoRecebida);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Produto> call, Throwable t) {
+
+                        }
+                    });
                 }
             }
         }
