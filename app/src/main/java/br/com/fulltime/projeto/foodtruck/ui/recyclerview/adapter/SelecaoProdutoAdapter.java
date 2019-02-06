@@ -57,18 +57,20 @@ public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAd
     }
 
     public void ordenaTipo(String tipo) {
-        Comparador comparador = new Comparador();
-        Collections.sort(itemVendas, comparador);
-        int contadorDePosicoes = 0;
-        int posicaoParaTrocar = 0;
-        for (ItemVenda item : itemVendas) {
-            if (item.getProduto().getTipo() == tipo) {
-                Collections.swap(itemVendas, contadorDePosicoes, posicaoParaTrocar);
-                posicaoParaTrocar++;
+        if (getItemCount() > 0) {
+            Comparador comparador = new Comparador();
+            Collections.sort(itemVendas, comparador);
+            int contadorDePosicoes = 0;
+            int posicaoParaTrocar = 0;
+            for (ItemVenda item : itemVendas) {
+                if (item.getProduto().getTipo() == tipo) {
+                    Collections.swap(itemVendas, contadorDePosicoes, posicaoParaTrocar);
+                    posicaoParaTrocar++;
+                }
+                contadorDePosicoes++;
             }
-            contadorDePosicoes++;
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     public class SelecaoProdutoViewHolder extends RecyclerView.ViewHolder {

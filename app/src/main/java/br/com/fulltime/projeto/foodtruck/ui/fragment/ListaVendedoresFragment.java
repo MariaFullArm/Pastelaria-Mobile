@@ -18,6 +18,7 @@ import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.dao.VendedorDAO;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioVendedorActivity;
+import br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.ListaVendedorAdapter;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerVendedor;
 
@@ -36,6 +37,7 @@ public class ListaVendedoresFragment extends MainFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_vendedor, container, false);
 
+        ((MainActivity)getActivity()).setToolbarTiltle("Lista de Vendedores");
         configuraBotaoAdicionaVendedor(view);
         List<Vendedor> vendedores = pegaVendedores();
         configuraRecyclerView(view, vendedores);

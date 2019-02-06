@@ -23,6 +23,7 @@ import br.com.fulltime.projeto.foodtruck.modelo.Produto;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioProdutoActivity;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioVendedorActivity;
+import br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity;
 
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.ProdutoConstantes.*;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.*;
@@ -34,8 +35,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        FragmentActivity activity = getActivity();
-        activity.setTitle("Pastelaria");
+        ((MainActivity)getActivity()).setToolbarTiltle("Pastelaria");
         configuraBotoes(view);
 
         return view;

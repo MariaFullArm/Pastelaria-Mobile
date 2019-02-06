@@ -3,6 +3,7 @@ package br.com.fulltime.projeto.foodtruck.ui.activity;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -39,6 +41,11 @@ public class SelecaoProdutoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selecao_produto);
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_centralizada);
+        TextView tituloToolbar = findViewById(R.id.title_toolbar);
+        tituloToolbar.setText("Seleção de Produtos");
+
         configuraRecyclerView();
         configuraSpinner();
     }
@@ -58,7 +65,7 @@ public class SelecaoProdutoActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==0){
+                if (position == 0) {
                     ordenarLista("");
                 }
                 if (position == 1) {
@@ -98,7 +105,7 @@ public class SelecaoProdutoActivity extends AppCompatActivity {
         adapter.setOnItemVendaSelectedListener(new OnItemVendaSelectedListener() {
             @Override
             public void onItemVendaSelected(ItemVenda item, int posicao, int quantidade) {
-                if (quantidade >0){
+                if (quantidade > 0) {
                     itemVendasDeExibicao.get(posicao).setQuantidade(quantidade);
                 }
             }
@@ -118,8 +125,8 @@ public class SelecaoProdutoActivity extends AppCompatActivity {
 
             case R.id.menu_formulario_ok:
                 List<ItemVenda> itensVenda = new ArrayList<>();
-                for (ItemVenda i :itemVendasDeExibicao) {
-                    if(i.getQuantidade()>0)
+                for (ItemVenda i : itemVendasDeExibicao) {
+                    if (i.getQuantidade() > 0)
                         itensVenda.add(i);
                 }
 
@@ -134,14 +141,13 @@ public class SelecaoProdutoActivity extends AppCompatActivity {
 
     private void criaProdutos(MoedaUtil conversor, ProdutoDAO dao) {
         dao.insere(
-                new Produto(),
-                new Produto(),
-                new Produto(),
-                new Produto(),
-                new Produto(),
-                new Produto(),
-                new Produto(),
-                new Produto());
-
+//                new Produto(),
+//                new Produto(),
+//                new Produto(),
+//                new Produto(),
+//                new Produto(),
+//                new Produto(),
+//                new Produto(),
+        );
     }
 }

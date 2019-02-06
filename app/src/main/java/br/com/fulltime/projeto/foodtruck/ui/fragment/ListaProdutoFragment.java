@@ -23,6 +23,7 @@ import br.com.fulltime.projeto.foodtruck.dao.ProdutoDAO;
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
 import br.com.fulltime.projeto.foodtruck.retrofit.RetrofitConfig;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioProdutoActivity;
+import br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.ListaProdutoAdapter;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerProduto;
 import retrofit2.Call;
@@ -45,6 +46,7 @@ public class ListaProdutoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_produto, container, false);
 
+        ((MainActivity)getActivity()).setToolbarTiltle("Lista de Produtos");
         configuraBotaoAdicionarProduto(view);
         produtos = new ArrayList<>();
         configuraRecyclerView(view);

@@ -4,14 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.fulltime.projeto.foodtruck.R;
-import br.com.fulltime.projeto.foodtruck.util.CpfUtil;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CHAVE_POSICAO;
@@ -21,8 +22,7 @@ import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorC
 public class FormularioVendedorActivity extends AppCompatActivity {
 
 
-    public static final String TITLE_TOOLBAR_ALTERAR = "Alterar Vendedor";
-    public static final String TITLE_TOOLBAR_ADICIONAR = "Adicionar Vendedor";
+    public static final String TITLE_TOOLBAR_VENDEDOR = "Formulário do Vendedor";
     private int posicaoRecibida = CODIGO_POSICAO_INVALIDA;
     private EditText campoNome;
     private EditText campoCPF;
@@ -31,13 +31,16 @@ public class FormularioVendedorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_vendedor);
-        setTitle(TITLE_TOOLBAR_ADICIONAR);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_centralizada);
+        TextView tituloToolbar = findViewById(R.id.title_toolbar);
+        tituloToolbar.setText(TITLE_TOOLBAR_VENDEDOR);
 
         inicializaCampos();
 
         Intent intentRecebida = getIntent();
         if (intentRecebida.hasExtra(CHAVE_VENDEDOR)) {
-            setTitle(TITLE_TOOLBAR_ALTERAR);
             Vendedor vendedorRecebido = (Vendedor) intentRecebida.getSerializableExtra(CHAVE_VENDEDOR);
             posicaoRecibida = intentRecebida.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
             preencheCampos(vendedorRecebido);

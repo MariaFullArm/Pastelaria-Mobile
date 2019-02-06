@@ -14,6 +14,7 @@ import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Venda;
+import br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.HistoricoVendaAdapter;
 
 public class HistoricoVendaFragment extends Fragment {
@@ -22,6 +23,8 @@ public class HistoricoVendaFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_historico_venda, container, false);
+
+        ((MainActivity)getActivity()).setToolbarTiltle("Historico de Venda");
 
         List<Venda> vendas = Arrays.asList(
                 new Venda(),

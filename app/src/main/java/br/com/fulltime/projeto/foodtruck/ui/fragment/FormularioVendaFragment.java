@@ -21,6 +21,7 @@ import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.ItemVenda;
+import br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity;
 import br.com.fulltime.projeto.foodtruck.ui.activity.SelecaoProdutoActivity;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.ItemVendaAdapter;
 import br.com.fulltime.projeto.foodtruck.util.DataUtil;
@@ -37,6 +38,7 @@ public class FormularioVendaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_formulario_venda, container, false);
 
+        ((MainActivity)getActivity()).setToolbarTiltle("Cadastrar Venda");
         configuraData(view);
         listaDeProdutos = view.findViewById(R.id.formulario_venda_lista_produtos);
         itensVenda = new ArrayList<>();
