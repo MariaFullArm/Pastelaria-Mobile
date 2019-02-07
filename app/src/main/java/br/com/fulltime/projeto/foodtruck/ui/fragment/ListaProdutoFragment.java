@@ -54,8 +54,9 @@ public class ListaProdutoFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
                 produtos = response.body();
-                if (produtos != null)
+                if (produtos != null) {
                     adapter.substituiLista(produtos);
+                }
             }
 
             @Override
@@ -90,8 +91,11 @@ public class ListaProdutoFragment extends Fragment {
                 call.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        adapter.remove(posicao);
-                        Toast.makeText(getContext(), produto.getNome() + " foi excluido com sucesso!", Toast.LENGTH_LONG).show();
+                        if (response.isSuccessful()) {
+                            adapter.remove(posicao);
+                            Toast.makeText(getContext(), produto.getNome() +
+                                    " foi excluido com sucesso!", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
@@ -131,33 +135,38 @@ public class ListaProdutoFragment extends Fragment {
                 insere.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        adapter.adiciona(produtoRecebido);
-                        Toast.makeText(getContext(),
-                                "Produto cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        Log.e(" ", response.isSuccessful() +"");
+                        if (response.isSuccessful()) {
+                            adapter.adiciona(produtoRecebido);
+                            Toast.makeText(getContext(),
+                                    "Produto cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Toast.makeText(getContext(), "Ocorreu um erro no cadastro do produto", Toast.LENGTH_LONG).show();
-
                     }
                 });
             }
 
             if (ehRequisicaoParaAlterarProdutoComResultado(requestCode, data)) {
-                final Produto produtoRecebido = (Produto) data.getSerializableExtra(CHAVE_PRODUTO);
-                final int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
+                Produto produtoRecebido = (Produto) data.getSerializableExtra(CHAVE_PRODUTO);
+                final int posicao = data.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
 
-                if (posicaoRecebida > CODIGO_POSICAO_INVALIDA) {
-                    Call<Produto> call = new RetrofitConfig().getProdutoService().altera(produtoRecebido.getId(), produtoRecebido);
+                if (posicao > CODIGO_POSICAO_INVALIDA) {
+                    Call<Produto> call = new RetrofitConfig()
+                            .getProdutoService().altera(produtoRecebido.getId(), produtoRecebido);
                     call.enqueue(new Callback<Produto>() {
                         @Override
                         public void onResponse(Call<Produto> call, Response<Produto> response) {
-                            Produto produtoDaApi = response.body();
-                            Toast.makeText(getContext(),
-                                    "Produto alterado com sucesso", Toast.LENGTH_SHORT).show();
+                            if (response.isSuccessful()) {
+                                Produto produtoDaApi = response.body();
+                                Toast.makeText(getContext(),
+                                        "Produto alterado com sucesso", Toast.LENGTH_SHORT).show();
 
-                            adapter.altera(produtoDaApi, posicaoRecebida);
+                                adapter.altera(produtoDaApi, posicao);
+                            }
                         }
 
                         @Override

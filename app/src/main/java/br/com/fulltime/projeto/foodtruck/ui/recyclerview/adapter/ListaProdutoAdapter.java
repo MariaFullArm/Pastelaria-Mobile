@@ -77,26 +77,26 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
         private final TextView nome;
         private final TextView tipo;
         private final TextView preco;
-        private final ImageView menu;
+        private final ImageView mais;
         private Produto produto;
 
         public ProdutoViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             nome = itemView.findViewById(R.id.item_produto_nome);
-            tipo = itemView.findViewById(R.id.item_produto_tipo);
+            tipo = itemView.findViewById(R.id.item_vendedor_tipo);
             preco = itemView.findViewById(R.id.item_produto_preco);
-            menu = itemView.findViewById(R.id.item_produto_menu);
+            mais = itemView.findViewById(R.id.item_produto_mais);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onItemClickListenerProduto.onItemClick(produto, getAdapterPosition());
                 }
             });
-            menu.setOnClickListener(new View.OnClickListener() {
+            mais.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(context, menu);
+                    PopupMenu popup = new PopupMenu(context, mais);
 
                     popup.inflate(R.menu.menu_opcao_produtos);
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

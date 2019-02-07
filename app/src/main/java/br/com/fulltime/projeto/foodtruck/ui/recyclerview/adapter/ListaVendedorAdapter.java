@@ -2,10 +2,13 @@ package br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,12 +16,11 @@ import java.util.List;
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerVendedor;
-import br.com.fulltime.projeto.foodtruck.util.CpfUtil;
 
 public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdapter.VendedorViewHolder> {
 
 
-    private final List<Vendedor> vendedores;
+    private List<Vendedor> vendedores;
     private Context context;
     private OnItemClickListenerVendedor onItemClickListenerVendedor;
 
@@ -65,21 +67,49 @@ public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdap
         notifyItemRemoved(posicao);
     }
 
+    public void substituiLista(List<Vendedor> vendedores) {
+        this.vendedores = vendedores;
+        notifyDataSetChanged();
+    }
+
     class VendedorViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView nome;
         private final TextView cpf;
+        private final ImageView mais;
         private Vendedor vendedor;
 
         public VendedorViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            nome = itemView.findViewById(R.id.item_produto_tipo);
+            nome = itemView.findViewById(R.id.item_vendedor_tipo);
             cpf = itemView.findViewById(R.id.item_vendedor_cpf);
+            mais = itemView.findViewById(R.id.item_vendedor_mais);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onItemClickListenerVendedor.onItemClick(vendedor, getAdapterPosition());
+                }
+            });
+
+            mais.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(context, mais);
+
+                    popup.inflate(R.menu.menu_opcao_produtos);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.produto_deletar:
+                                    onItemClickListenerVendedor.onItemClickDeletar(vendedor, getAdapterPosition());
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popup.show();
                 }
             });
         }
@@ -91,8 +121,7 @@ public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdap
 
         private void preencheCampo(Vendedor vendedor) {
             nome.setText(vendedor.getNome());
-            String cpfFormatado = new CpfUtil().formataCPF(vendedor.getCpf());
-            cpf.setText(cpfFormatado);
+            cpf.setText(vendedor.getCpf());
         }
     }
 }

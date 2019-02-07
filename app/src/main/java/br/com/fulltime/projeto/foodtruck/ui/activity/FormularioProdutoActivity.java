@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +20,9 @@ import android.widget.Toast;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import br.com.fulltime.projeto.foodtruck.MoneyTextWatcher;
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
 import br.com.fulltime.projeto.foodtruck.util.MoedaUtil;
@@ -35,6 +40,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
     private EditText campoValor;
     private EditText campoDescricao;
     private String string;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +59,38 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
             Produto produtoRecebido = (Produto) intentRecebida.getSerializableExtra(CHAVE_PRODUTO);
             posicaoRecibida = intentRecebida.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
             preencheCampos(produtoRecebido);
+            this.id = produtoRecebido.getId();
         }
 
         Button botaoSalvar = findViewById(R.id.formulario_produto_botao_salvar);
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (campoNome.length() < 1 || campoValor.length() < 1) {
-                    Toast.makeText(FormularioProdutoActivity.this,
-                            "O formulario não foi prenchido corretamente", Toast.LENGTH_SHORT).show();
-                } else {
+                if (ehFormularioDeProdutoValido()) {
                     Produto produtoCriado = criaProduto();
                     enviaProduto(produtoCriado);
                     finish();
                 }
             }
-
         });
+    }
+
+    private boolean ehFormularioDeProdutoValido() {
+        if (campoValor.length() < 1) {
+            Toast.makeText(FormularioProdutoActivity.this, "O campo Valor não foi preenchido", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (campoNome.length() < 1) {
+            Toast.makeText(FormularioProdutoActivity.this, "O campo Nome não foi preenchido", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        String valorString = campoValor.getText().toString();
+        BigDecimal valorReal = MoedaUtil.validaMoeda(valorString);
+        if(valorReal== BigDecimal.ZERO){
+            Toast.makeText(FormularioProdutoActivity.this, "Valor não pode ser zero", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void enviaProduto(Produto produto) {
@@ -77,6 +98,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         intent.putExtra(CHAVE_PRODUTO, produto);
         intent.putExtra(CHAVE_POSICAO, posicaoRecibida);
         setResult(Activity.RESULT_OK, intent);
+        Log.i("valor: ", "R$" + produto.getValor());
     }
 
     private Produto criaProduto() {
@@ -87,6 +109,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         BigDecimal valorReal = MoedaUtil.validaMoeda(valorString);
         Produto produto = new Produto();
         produto.criaProdutoSemId(tipo, nome, valorReal, descricao);
+        produto.setId(id);
         return produto;
     }
 
@@ -95,6 +118,8 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         spinnerTipo.setOnItemSelectedListener(this);
         campoNome = findViewById(R.id.formulario_produto_nome);
         campoValor = findViewById(R.id.formulario_produto_preco);
+        Locale br = new Locale("pt", "BR");
+        campoValor.addTextChangedListener(new MoneyTextWatcher(campoValor, br));
         campoDescricao = findViewById(R.id.formulario_produto_descricao);
 
         configuraSpinner();

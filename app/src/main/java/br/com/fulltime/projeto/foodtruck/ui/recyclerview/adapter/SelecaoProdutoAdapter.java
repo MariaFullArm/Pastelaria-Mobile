@@ -99,6 +99,8 @@ public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAd
 
                 }
             });
+
+
         }
 
         public void vincula(ItemVenda itemVenda) {
@@ -130,6 +132,7 @@ public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAd
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
+            spinner.setSelection(itemVenda.getQuantidade());
         }
     }
 

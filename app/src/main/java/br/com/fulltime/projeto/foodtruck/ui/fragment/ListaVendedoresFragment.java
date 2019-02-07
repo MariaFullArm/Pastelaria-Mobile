@@ -7,20 +7,26 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.dao.VendedorDAO;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
+import br.com.fulltime.projeto.foodtruck.retrofit.RetrofitConfig;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioVendedorActivity;
 import br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter.ListaVendedorAdapter;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerVendedor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CHAVE_POSICAO;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CHAVE_VENDEDOR;
@@ -31,26 +37,43 @@ import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorC
 public class ListaVendedoresFragment extends MainFragment {
 
     private ListaVendedorAdapter adapter;
+    private List<Vendedor> vendedores;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_vendedor, container, false);
 
-        ((MainActivity)getActivity()).setToolbarTiltle("Lista de Vendedores");
+        ((MainActivity) getActivity()).setToolbarTiltle("Lista de Vendedores");
         configuraBotaoAdicionaVendedor(view);
-        List<Vendedor> vendedores = pegaVendedores();
-        configuraRecyclerView(view, vendedores);
+        vendedores = new ArrayList<>();
+        configuraRecyclerView(view);
+
+        Call<List<Vendedor>> call = new RetrofitConfig().getVendedorService().lista();
+        call.enqueue(new Callback<List<Vendedor>>() {
+            @Override
+            public void onResponse(Call<List<Vendedor>> call, Response<List<Vendedor>> response) {
+                vendedores = response.body();
+                if (vendedores != null) {
+                    adapter.substituiLista(vendedores);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Vendedor>> call, Throwable t) {
+                Log.e("onFailure", t.getMessage());
+            }
+        });
 
         return view;
     }
 
-    private void configuraRecyclerView(View view, List<Vendedor> vendedores) {
+    private void configuraRecyclerView(View view) {
         RecyclerView listaVendedor = view.findViewById(R.id.lista_vendedor_recyclerview);
-        configuraAdapter(vendedores, listaVendedor);
+        configuraAdapter(listaVendedor);
     }
 
-    private void configuraAdapter(List<Vendedor> vendedores, RecyclerView listaVendedor) {
+    private void configuraAdapter(RecyclerView listaVendedor) {
         adapter = new ListaVendedorAdapter(getContext(), vendedores);
         listaVendedor.setAdapter(adapter);
         adapter.setOnItemClickListenerVendedor(new OnItemClickListenerVendedor() {
@@ -61,13 +84,29 @@ public class ListaVendedoresFragment extends MainFragment {
                 intent.putExtra("posicao", posicao);
                 startActivityForResult(intent, CODIGO_DE_REQUISICAO_ALTERA_VENDEDOR);
             }
-        });
-    }
 
-    private List<Vendedor> pegaVendedores() {
-        VendedorDAO dao = new VendedorDAO();
-        List<Vendedor> vendedores = dao.todos();
-        return vendedores;
+            @Override
+            public void onItemClickDeletar(Vendedor vendedor, final int posicao) {
+                Call<String> call = new RetrofitConfig().getVendedorService().deleta(10);
+                call.enqueue(new Callback<String>() {
+
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Log.e("onResponde", " (2) " + response.raw().code());
+                        if (response.isSuccessful()) {
+                            adapter.remove(posicao);
+                            Toast.makeText(getContext(),
+                                    "Vendedor excluido com sucesso", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                    }
+                });
+            }
+        });
     }
 
     private void configuraBotaoAdicionaVendedor(View view) {
@@ -91,25 +130,46 @@ public class ListaVendedoresFragment extends MainFragment {
 
         if (resultCode == Activity.RESULT_OK) {
             if (ehRequisicaoParaAdicionarVendedorComResultado(requestCode, data)) {
-                Vendedor vendedorRecebido = (Vendedor) data.getSerializableExtra(CHAVE_VENDEDOR);
-                Toast.makeText(getContext(),
-                        "Vendedor " + vendedorRecebido.getNome() + " Salvo", Toast.LENGTH_SHORT).show();
+                final Vendedor vendedor = (Vendedor) data.getSerializableExtra(CHAVE_VENDEDOR);
 
-                VendedorDAO dao = new VendedorDAO();
-                dao.insere(vendedorRecebido);
-                adapter.adiciona(vendedorRecebido);
+                Call<Void> call = new RetrofitConfig().getVendedorService().insere(vendedor);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Toast.makeText(getContext(),
+                                "Vendedor cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        adapter.adiciona(vendedor);
+                    }
 
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
             }
 
             if (ehRequisicaoParaAlterarVendedorComResultado(requestCode, data)) {
-                Vendedor vendedorRecebido = (Vendedor) data.getSerializableExtra(CHAVE_VENDEDOR);
-                int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
+                Vendedor vendedor = (Vendedor) data.getSerializableExtra(CHAVE_VENDEDOR);
+                final int posicao = data.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
 
-                if (posicaoRecebida > CODIGO_POSICAO_INVALIDA) {
-                    Toast.makeText(getContext(),
-                            "Vendedor " + vendedorRecebido.getNome() + " Foi Alterado", Toast.LENGTH_SHORT).show();
-                    new VendedorDAO().altera(vendedorRecebido, posicaoRecebida);
-                    adapter.altera(vendedorRecebido, posicaoRecebida);
+                if (posicao > CODIGO_POSICAO_INVALIDA) {
+                    Log.i("teste", " +" + vendedor.getId());
+                    Call<Vendedor> call = new RetrofitConfig()
+                            .getVendedorService().altera(vendedor.getId(), vendedor);
+                    call.enqueue(new Callback<Vendedor>() {
+                        @Override
+                        public void onResponse(Call<Vendedor> call, Response<Vendedor> response) {
+                            Vendedor vendedorAPI = response.body();
+                            Toast.makeText(getContext(),
+                                    "Vendedor alterado com sucesso", Toast.LENGTH_SHORT).show();
+                            adapter.altera(vendedorAPI, posicao);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Vendedor> call, Throwable t) {
+
+                        }
+                    });
                 }
             }
         }

@@ -6,4 +6,6 @@ public interface OnItemClickListenerVendedor {
 
     void onItemClick(Vendedor vendedor, int posicao);
 
+    void onItemClickDeletar(Vendedor vendedor, int posicao);
+
 }

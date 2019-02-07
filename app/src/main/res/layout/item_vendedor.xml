@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/item_produto_tipo"
+            android:id="@+id/item_vendedor_tipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -39,9 +39,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/item_produto_tipo"
-            app:layout_constraintTop_toBottomOf="@id/item_produto_tipo"
+            app:layout_constraintStart_toStartOf="@+id/item_vendedor_tipo"
+            app:layout_constraintTop_toBottomOf="@id/item_vendedor_tipo"
             tools:text="xxx.xxx.xxx-xx" />
+
+        <ImageView
+            android:id="@+id/item_vendedor_mais"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_action_more" />
 
     </android.support.constraint.ConstraintLayout>
 

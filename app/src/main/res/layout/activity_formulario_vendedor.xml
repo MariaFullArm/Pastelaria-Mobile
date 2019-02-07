@@ -10,22 +10,23 @@
         android:id="@+id/formulario_vendedor_nome_"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="25dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/formulario_vendedor_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome"
-            android:textSize="18dp"
             android:maxLength="50"
+            android:padding="8dp"
+            android:textSize="24sp"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
 
     </android.support.design.widget.TextInputLayout>
@@ -35,7 +36,7 @@
         android:id="@+id/textInputLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp"
+        android:layout_margin="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/formulario_vendedor_nome_">
@@ -44,22 +45,12 @@
             android:id="@+id/formulario_vendedor_cpf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="cpf"
-            android:maxLength="11"
-            android:textSize="24sp" />
+            android:hint="CPF"
+            android:padding="8dp"
+            android:textSize="24sp"
+            android:inputType="number"
+            android:textStyle="italic" />
     </android.support.design.widget.TextInputLayout>
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="1dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="?android:attr/listDivider"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <Button
         android:id="@+id/formulario_vendedor_botao_salvar"
@@ -70,8 +61,10 @@
         android:text="Salvar"
         android:textColor="@android:color/white"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider2"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"/>
 
 </android.support.constraint.ConstraintLayout>

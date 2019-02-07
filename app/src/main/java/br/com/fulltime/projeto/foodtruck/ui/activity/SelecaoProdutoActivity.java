@@ -140,14 +140,12 @@ public class SelecaoProdutoActivity extends AppCompatActivity {
     }
 
     private void criaProdutos(MoedaUtil conversor, ProdutoDAO dao) {
-        dao.insere(
-//                new Produto(),
-//                new Produto(),
-//                new Produto(),
-//                new Produto(),
-//                new Produto(),
-//                new Produto(),
-//                new Produto(),
-        );
+        Produto produto = new Produto();
+        produto.setNome("Pastel de frango");
+        produto.setTipo("Pastel");
+        Produto produto1 = new Produto();
+        produto1.setNome("Coca cola");
+        produto1.setTipo("Bebida");
+        dao.insere(produto, produto1);
     }
 }

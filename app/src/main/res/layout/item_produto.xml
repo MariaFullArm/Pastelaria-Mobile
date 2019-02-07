@@ -19,7 +19,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/item_produto_tipo"
+            android:id="@+id/item_vendedor_tipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -40,8 +40,8 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/item_produto_preco"
-            app:layout_constraintStart_toStartOf="@+id/item_produto_tipo"
-            app:layout_constraintTop_toBottomOf="@id/item_produto_tipo"
+            app:layout_constraintStart_toStartOf="@+id/item_vendedor_tipo"
+            app:layout_constraintTop_toBottomOf="@id/item_vendedor_tipo"
             tools:text="Nome do Produto"
             app:layout_constraintHorizontal_bias="0"/>
 
@@ -55,12 +55,12 @@
             android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_produto_tipo"
+            app:layout_constraintTop_toBottomOf="@+id/item_vendedor_tipo"
             app:layout_constraintVertical_bias="1.0"
             tools:text="R$0,00" />
 
         <ImageView
-            android:id="@+id/item_produto_menu"
+            android:id="@+id/item_produto_mais"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="12dp"
