@@ -1,6 +1,5 @@
 package br.com.fulltime.projeto.foodtruck.retrofit;
 
-import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.service.ProdutoService;
 import br.com.fulltime.projeto.foodtruck.service.VendedorService;
 import retrofit2.Retrofit;
@@ -17,11 +16,11 @@ public class RetrofitConfig {
                 .build();
     }
 
-    public ProdutoService getProdutoService(){
+    public ProdutoService getProdutoService() {
         return retrofit.create(ProdutoService.class);
     }
 
-    public VendedorService getVendedorService(){
+    public VendedorService getVendedorService() {
         return retrofit.create(VendedorService.class);
     }
 }

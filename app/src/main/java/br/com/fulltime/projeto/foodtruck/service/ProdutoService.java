@@ -3,6 +3,7 @@ package br.com.fulltime.projeto.foodtruck.service;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -14,7 +15,7 @@ import retrofit2.http.Path;
 public interface ProdutoService {
 
     @POST("produto")
-    Call<Void> insere(@Body Produto produto);
+    Call<ResponseBody> insere(@Body Produto produto);
 
     @GET("produto")
     Call<List<Produto>> lista();

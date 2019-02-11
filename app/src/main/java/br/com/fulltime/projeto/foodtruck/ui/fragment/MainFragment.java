@@ -7,24 +7,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import br.com.fulltime.projeto.foodtruck.R;
-import br.com.fulltime.projeto.foodtruck.dao.ProdutoDAO;
-import br.com.fulltime.projeto.foodtruck.dao.VendedorDAO;
-import br.com.fulltime.projeto.foodtruck.modelo.Produto;
-import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioProdutoActivity;
 import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioVendedorActivity;
 import br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity;
 
+import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.exibirProgressMain;
+import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.setSwipeStatusMain;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.ProdutoConstantes.*;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.*;
 
@@ -37,6 +33,8 @@ public class MainFragment extends Fragment {
 
         ((MainActivity)getActivity()).setToolbarTiltle("Pastelaria");
         configuraBotoes(view);
+
+        setSwipeStatusMain(false);
 
         return view;
     }
@@ -133,21 +131,10 @@ public class MainFragment extends Fragment {
 
         if (resultCode == Activity.RESULT_OK) {
             if(requestCode == CODIGO_DE_REQUISICAO_VENDEDOR_MAIN){
-                Vendedor vendedorRecebido = (Vendedor) data.getSerializableExtra(CHAVE_VENDEDOR);
-                Toast.makeText(getContext(),
-                        "Vendedor " + vendedorRecebido.getNome() + " Salvo", Toast.LENGTH_SHORT).show();
-
-                VendedorDAO dao = new VendedorDAO();
-                dao.insere(vendedorRecebido);
                 empilhaFragment(new ListaVendedoresFragment());
             }
 
             if(requestCode == CODIGO_DE_REQUISICAO_PRODUTO_MAIN){
-                Produto produtoRecebido = (Produto) data.getSerializableExtra(CHAVE_PRODUTO);
-                Toast.makeText(getContext(),
-                        "produto " + produtoRecebido.getNome() + " Salvo", Toast.LENGTH_SHORT).show();
-
-                new ProdutoDAO().insere(produtoRecebido);
                 empilhaFragment(new ListaProdutoFragment());
             }
         }

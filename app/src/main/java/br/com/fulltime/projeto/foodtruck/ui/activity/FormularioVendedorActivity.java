@@ -15,21 +15,22 @@ import android.widget.Toast;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
+import br.com.fulltime.projeto.foodtruck.request.RequestComunicador;
 import br.com.fulltime.projeto.foodtruck.R;
+import br.com.fulltime.projeto.foodtruck.request.RequestVendedor;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
-import br.com.fulltime.projeto.foodtruck.util.CpfUtil;
 
-import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CHAVE_POSICAO;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CHAVE_VENDEDOR;
-import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CODIGO_POSICAO_INVALIDA;
+import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CODIGO_DE_REQUISICAO_ALTERA_VENDEDOR;
 
 public class FormularioVendedorActivity extends AppCompatActivity {
 
     public static final String TITLE_TOOLBAR_VENDEDOR = "Formulário do Vendedor";
-    private int posicaoRecibida = CODIGO_POSICAO_INVALIDA;
+    private int requisicao;
     private EditText campoNome;
     private EditText campoCPF;
-    private int id;
+    private RequestVendedor request = new RequestVendedor(this);
+    private int id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class FormularioVendedorActivity extends AppCompatActivity {
         Intent intentRecebida = getIntent();
         if (intentRecebida.hasExtra(CHAVE_VENDEDOR)) {
             Vendedor vendedorRecebido = (Vendedor) intentRecebida.getSerializableExtra(CHAVE_VENDEDOR);
-            posicaoRecibida = intentRecebida.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
+            requisicao = intentRecebida.getIntExtra("requisicao", CODIGO_DE_REQUISICAO_ALTERA_VENDEDOR);
             preencheCampos(vendedorRecebido);
             id = vendedorRecebido.getId();
         }
@@ -55,10 +56,27 @@ public class FormularioVendedorActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (ehFormularioDeVendedorValido()) {
                     Vendedor vendedor = criaVendedor();
-                    retornaVendedor(vendedor);
-                    finish();
+
+                    if (vendedor.getId() >= 0) {
+                        request.alterarVendedor(vendedor, new RequestComunicador() {
+                            @Override
+                            public void comunica() {
+                                setResult(Activity.RESULT_OK);
+                                finish();
+                            }
+                        });
+                    } else {
+                        request.inserirVendedor(vendedor, new RequestComunicador() {
+                            @Override
+                            public void comunica() {
+                                setResult(Activity.RESULT_OK);
+                                finish();
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -66,28 +84,16 @@ public class FormularioVendedorActivity extends AppCompatActivity {
     }
 
     private boolean ehFormularioDeVendedorValido() {
-        String s = campoCPF.getText().toString();
         if (campoNome.length() < 1) {
-            Toast.makeText(FormularioVendedorActivity.this, "O campo Nome não foi prenchido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FormularioVendedorActivity.this, "Nome não foi prenchido", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (campoCPF.length() < 14) {
-            Toast.makeText(FormularioVendedorActivity.this, "O campo CPF não foi prenchido corretamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FormularioVendedorActivity.this, "CPF não foi prenchido corretamente", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (new CpfUtil().validaCPF(s) == false) {
-            Toast.makeText(FormularioVendedorActivity.this, "Por favor digite um CPF valido", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
 
-    @NonNull
-    private void retornaVendedor(Vendedor vendedor) {
-        Intent intent = new Intent();
-        intent.putExtra(CHAVE_VENDEDOR, vendedor);
-        intent.putExtra(CHAVE_POSICAO, posicaoRecibida);
-        setResult(Activity.RESULT_OK, intent);
+        return true;
     }
 
     @NonNull

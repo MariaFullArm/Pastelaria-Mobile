@@ -3,6 +3,7 @@ package br.com.fulltime.projeto.foodtruck.service;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -14,14 +15,14 @@ import retrofit2.http.Path;
 public interface VendedorService {
 
     @POST("vendedor")
-    Call<Void> insere(@Body Vendedor vendedor);
+    Call<ResponseBody> insere(@Body Vendedor vendedor);
 
     @GET("vendedor")
     Call<List<Vendedor>> lista();
 
     @DELETE("vendedor/{id}")
-    Call<String> deleta(@Path("id") int id);
+    Call<ResponseBody> deleta(@Path("id") int id);
 
     @PUT("vendedor/{id}")
-    Call<Vendedor> altera(@Path("id") int id, @Body Vendedor vendedor);
+    Call<ResponseBody> altera(@Path("id") int id, @Body Vendedor vendedor);
 }

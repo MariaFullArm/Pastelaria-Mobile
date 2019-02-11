@@ -54,9 +54,9 @@
 
     <Button
         android:id="@+id/formulario_vendedor_botao_salvar"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_margin="100dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/ic_botao_verde_personalizado"
         android:text="Salvar"
         android:textColor="@android:color/white"

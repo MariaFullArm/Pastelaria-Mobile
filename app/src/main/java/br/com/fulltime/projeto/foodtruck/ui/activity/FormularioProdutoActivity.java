@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,22 +22,21 @@ import java.util.Locale;
 import br.com.fulltime.projeto.foodtruck.MoneyTextWatcher;
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
+import br.com.fulltime.projeto.foodtruck.request.RequestComunicador;
+import br.com.fulltime.projeto.foodtruck.request.RequestProduto;
 import br.com.fulltime.projeto.foodtruck.util.MoedaUtil;
 
-import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.ProdutoConstantes.CHAVE_POSICAO;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.ProdutoConstantes.CHAVE_PRODUTO;
-import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CODIGO_POSICAO_INVALIDA;
 
 public class FormularioProdutoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public static final String TITLE_TOOLBAR_PRODUTO = "Formulário do Produto";
-    private int posicaoRecibida = CODIGO_POSICAO_INVALIDA;
     private Spinner spinnerTipo;
     private EditText campoNome;
     private EditText campoValor;
     private EditText campoDescricao;
     private String string;
-    private int id;
+    private int id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,26 +49,50 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         tituloToolbar.setText(TITLE_TOOLBAR_PRODUTO);
 
         inicializaCampos();
+        recebeProduto();
+        configuraBotaoSalvar();
+    }
 
-        Intent intentRecebida = getIntent();
-        if (intentRecebida.hasExtra(CHAVE_PRODUTO)) {
-            Produto produtoRecebido = (Produto) intentRecebida.getSerializableExtra(CHAVE_PRODUTO);
-            posicaoRecibida = intentRecebida.getIntExtra(CHAVE_POSICAO, CODIGO_POSICAO_INVALIDA);
-            preencheCampos(produtoRecebido);
-            this.id = produtoRecebido.getId();
-        }
-
+    private void configuraBotaoSalvar() {
         Button botaoSalvar = findViewById(R.id.formulario_produto_botao_salvar);
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ehFormularioDeProdutoValido()) {
-                    Produto produtoCriado = criaProduto();
-                    enviaProduto(produtoCriado);
-                    finish();
+                    Produto produto = criaProduto();
+
+                    RequestProduto request = new RequestProduto(FormularioProdutoActivity.this);
+                    if (id >= 0){
+                        request.alteraProduto(produto, new RequestComunicador() {
+                            @Override
+                            public void comunica() {
+                                setResult(Activity.RESULT_OK);
+                                finish();
+                            }
+                        });
+                    }
+                    else{
+                        request.insereProduto(produto, new RequestComunicador() {
+                            @Override
+                            public void comunica() {
+                                setResult(Activity.RESULT_OK);
+                                finish();
+                            }
+                        });
+                    }
+
                 }
             }
         });
+    }
+
+    private void recebeProduto() {
+        Intent intentRecebida = getIntent();
+        if (intentRecebida.hasExtra(CHAVE_PRODUTO)) {
+            Produto produtoRecebido = (Produto) intentRecebida.getSerializableExtra(CHAVE_PRODUTO);
+            preencheCampos(produtoRecebido);
+            this.id = produtoRecebido.getId();
+        }
     }
 
     private boolean ehFormularioDeProdutoValido() {
@@ -93,23 +113,15 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         return true;
     }
 
-    private void enviaProduto(Produto produto) {
-        Intent intent = new Intent();
-        intent.putExtra(CHAVE_PRODUTO, produto);
-        intent.putExtra(CHAVE_POSICAO, posicaoRecibida);
-        setResult(Activity.RESULT_OK, intent);
-        Log.i("valor: ", "R$" + produto.getValor());
-    }
-
     private Produto criaProduto() {
-        String tipo = string;
-        String nome = campoNome.getText().toString();
-        String descricao = campoDescricao.getText().toString();
-        String valorString = campoValor.getText().toString();
-        BigDecimal valorReal = MoedaUtil.validaMoeda(valorString);
         Produto produto = new Produto();
-        produto.criaProdutoSemId(tipo, nome, valorReal, descricao);
+        produto.setTipo(string);
+        produto.setNome(campoNome.getText().toString());
+        produto.setDescricao(campoDescricao.getText().toString());
+        String valor = campoValor.getText().toString();
+        produto.setValor(MoedaUtil.validaMoeda(valor));
         produto.setId(id);
+
         return produto;
     }
 
@@ -126,11 +138,11 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
     }
 
     private void configuraSpinner() {
-        List<String> tipos = new ArrayList<String>();
+        List<String> tipos = new ArrayList<>();
         tipos.add("Pastel");
         tipos.add("Bebida");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, tipos);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

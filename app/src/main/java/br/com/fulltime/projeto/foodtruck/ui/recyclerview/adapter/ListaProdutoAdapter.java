@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
@@ -24,9 +25,9 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
     private List<Produto> produtos;
     private OnItemClickListenerProduto onItemClickListenerProduto;
 
-    public ListaProdutoAdapter(Context context, List<Produto> produtos) {
+    public ListaProdutoAdapter(Context context) {
         this.context = context;
-        this.produtos = produtos;
+        produtos = new ArrayList<>();
     }
 
     public void setOnItemClickListenerProduto(OnItemClickListenerProduto onItemClickListenerProduto) {
@@ -71,6 +72,7 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
         this.produtos = produtos;
         notifyDataSetChanged();
     }
+
 
     public class ProdutoViewHolder extends RecyclerView.ViewHolder {
 

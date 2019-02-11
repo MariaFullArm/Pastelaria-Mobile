@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
@@ -24,9 +25,9 @@ public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdap
     private Context context;
     private OnItemClickListenerVendedor onItemClickListenerVendedor;
 
-    public ListaVendedorAdapter(Context context, List<Vendedor> vendedores) {
+    public ListaVendedorAdapter(Context context) {
         this.context = context;
-        this.vendedores = vendedores;
+        this.vendedores = new ArrayList<>();
     }
 
     public void setOnItemClickListenerVendedor(OnItemClickListenerVendedor onItemClickListenerVendedor){

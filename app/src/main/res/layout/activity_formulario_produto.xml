@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:hint="R$0,00"
-        android:textColorHint="@android:color/primary_text_light"
         android:inputType="numberDecimal"
         android:textSize="24dp"
         app:layout_constraintStart_toStartOf="@id/formulario_produto_nome"
@@ -69,9 +68,9 @@
 
     <Button
         android:id="@+id/formulario_produto_botao_salvar"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         android:background="@drawable/ic_botao_verde_personalizado"
         android:text="Salvar"
         android:textColor="@android:color/white"
