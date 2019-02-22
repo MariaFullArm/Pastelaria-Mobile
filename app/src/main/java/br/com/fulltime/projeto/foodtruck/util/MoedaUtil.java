@@ -19,6 +19,14 @@ public class MoedaUtil {
     public static BigDecimal validaMoeda(String valorEmTexto) {
         if (!valorEmTexto.isEmpty()) {
             String replace = valorEmTexto.replace(",", ".");
+            return new BigDecimal(replace.substring(3));
+        }
+        return BigDecimal.ZERO;
+    }
+
+    public static BigDecimal validaMoedaEditText(String valorEmTexto) {
+        if (!valorEmTexto.isEmpty()) {
+            String replace = valorEmTexto.replace(",", ".");
             return new BigDecimal(replace.substring(2));
         }
         return BigDecimal.ZERO;

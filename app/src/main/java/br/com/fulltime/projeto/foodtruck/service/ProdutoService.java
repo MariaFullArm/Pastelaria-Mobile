@@ -20,6 +20,12 @@ public interface ProdutoService {
     @GET("produto")
     Call<List<Produto>> lista();
 
+    @GET("produto/comida")
+    Call<List<Produto>> listaPastel();
+
+    @GET("produto/bebida")
+    Call<List<Produto>> listaBebida();
+
     @DELETE("produto/{id}")
     Call<String> delete(@Path("id") int id);
 

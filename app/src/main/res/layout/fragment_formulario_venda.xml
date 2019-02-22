@@ -1,135 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@android:style/Widget.DeviceDefault.Light.ScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-
-    <ScrollView
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pedido_lista_produtos"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/list_item_venda" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/formulario_venda_lista_produtos"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@id/pedido_lista_produtos" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintTop_toBottomOf="@id/formulario_venda_lista_produtos" />
+        <Button
+            android:id="@+id/formulario_venda_botao_selecionar_produto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/ic_botao_main_personalizado"
+            android:text="Selecionar Produtos"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pedido_lista_produtos" />
 
-            <Button
-                android:id="@+id/formulario_venda_botao_selecionar_produto"
-                android:layout_width="0dp"
+        <TextView
+            android:id="@+id/formulario_venda_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Vendedor: "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/formulario_venda_spinner_vendedor"/>
+
+        <Spinner
+            android:id="@+id/formulario_venda_spinner_vendedor"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/formulario_venda_botao_selecionar_produto"
+            app:layout_constraintStart_toEndOf="@id/formulario_venda_text"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            tools:listitem="@layout/item_spinner_vendedor"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@id/formulario_venda_spinner_vendedor" />
+
+        <EditText
+            android:id="@+id/formulario_venda_observacoes"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/borda"
+            android:gravity="top"
+            android:hint="Observações"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/formulario_venda_spinner_vendedor" />
+
+
+            <EditText
+                android:id="@+id/formulario_venda_data"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="@drawable/ic_botao_main_personalizado"
-                android:text="Selecionar Produtos"
-                android:textAllCaps="false"
+                android:focusable="false"
+                android:hint="Data"
+                android:inputType="none"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/formulario_venda_lista_produtos" />
-
-            <TextView
-                android:id="@+id/formulario_venda_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Vendedor: "
-                android:textAllCaps="false"
-                android:textColor="#212121"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/formulario_venda_botao_selecionar_produto" />
-
-            <Spinner
-                android:id="@+id/formulario_venda_spinner_vendedor"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/formulario_venda_text"
-                app:layout_constraintStart_toEndOf="@id/formulario_venda_text" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintTop_toBottomOf="@id/formulario_venda_spinner_vendedor" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/formulario_venda_input_observacoes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:layout_constraintTop_toBottomOf="@id/formulario_venda_spinner_vendedor">
-
-                <EditText
-                    android:id="@+id/formulario_venda_observacoes"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:gravity="top"
-                    android:hint="Observações" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/formulario_venda_input_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                tools:text="11/20/2014"
                 android:layout_margin="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/formulario_venda_input_observacoes">
+                app:layout_constraintTop_toBottomOf="@id/formulario_venda_observacoes"/>
 
-                <EditText
-                    android:id="@+id/formulario_venda_data"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="Data"
-                    android:inputType="none"
-                    android:textSize="20sp"
-                    tools:text="11/20/2014" />
 
-            </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:id="@+id/formulario_venda_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="R$0,00"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/formulario_venda_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/formulario_venda_data" />
 
-            <TextView
-                android:id="@+id/formulario_venda_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:text="R$0,00"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/formulario_venda_input_data" />
+        <Button
+            android:id="@+id/pedido_botao_finalizar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/ic_botao_verde_personalizado"
+            android:text="Salvar"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/formulario_venda_data"
+            app:layout_constraintVertical_bias="1"/>
+    </android.support.constraint.ConstraintLayout>
 
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/ic_botao_verde_personalizado"
-                android:text="Salvar"
-                android:textColor="@android:color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/formulario_venda_input_data" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+</ScrollView>

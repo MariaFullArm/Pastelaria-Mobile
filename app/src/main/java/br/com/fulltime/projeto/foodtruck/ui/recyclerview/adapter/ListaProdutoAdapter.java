@@ -53,21 +53,6 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
         return produtos.size();
     }
 
-    public void adiciona(Produto produto) {
-        produtos.add(produto);
-        notifyDataSetChanged();
-    }
-
-    public void altera(Produto produto, int posicao) {
-        produtos.set(posicao, produto);
-        notifyDataSetChanged();
-    }
-
-    public void remove(int posicao) {
-        produtos.remove(posicao);
-        notifyItemRemoved(posicao);
-    }
-
     public void substituiLista(List<Produto> produtos) {
         this.produtos = produtos;
         notifyDataSetChanged();
@@ -86,7 +71,7 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
             super(itemView);
 
             nome = itemView.findViewById(R.id.item_produto_nome);
-            tipo = itemView.findViewById(R.id.item_vendedor_tipo);
+            tipo = itemView.findViewById(R.id.item_vendedor_nome);
             preco = itemView.findViewById(R.id.item_produto_preco);
             mais = itemView.findViewById(R.id.item_produto_mais);
             itemView.setOnClickListener(new View.OnClickListener() {

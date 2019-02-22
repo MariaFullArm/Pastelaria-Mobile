@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,30 +14,33 @@ import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.ItemVenda;
-import br.com.fulltime.projeto.foodtruck.util.MoedaUtil;
 
-public class ItemVendaAdapter extends RecyclerView.Adapter<ItemVendaAdapter.Holder> {
+public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoViewHolder> {
 
     private final Context context;
     private List<ItemVenda> lista;
 
-    public ItemVendaAdapter(Context context) {
+    public PedidoAdapter(Context context) {
         this.context = context;
-        this.lista = new ArrayList<>();
+        lista = new ArrayList<>();
+    }
+
+    public void carregaLista(List<ItemVenda> lista) {
+        this.lista = lista;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View viewCriada = LayoutInflater.from(context)
-                .inflate(R.layout.list_item_venda, viewGroup, false);
-        return new Holder(viewCriada);
+    public PedidoViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View viewCriada = LayoutInflater.from(context).inflate(R.layout.list_item_pedido, viewGroup, false);
+        return new PedidoViewHolder(viewCriada);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int i) {
+    public void onBindViewHolder(@NonNull PedidoViewHolder pedidoViewHolder, int i) {
         ItemVenda itemVenda = lista.get(i);
-        holder.vincula(itemVenda);
+        pedidoViewHolder.vincula(itemVenda);
     }
 
     @Override
@@ -44,24 +48,19 @@ public class ItemVendaAdapter extends RecyclerView.Adapter<ItemVendaAdapter.Hold
         return lista.size();
     }
 
-    public void substituiLista(List<ItemVenda> itensRecebidos) {
-        this.lista = new ArrayList<>(itensRecebidos);
-        notifyDataSetChanged();
-    }
+    public class PedidoViewHolder extends RecyclerView.ViewHolder {
 
-    public class Holder extends RecyclerView.ViewHolder {
-
-        private final TextView nome;
+        private final TextView nomeProduto;
         private final TextView quantidade;
-        private final TextView preco;
+        private final TextView descricao;
         private ItemVenda itemVenda;
 
-        public Holder(@NonNull View itemView) {
+        public PedidoViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            nomeProduto = itemView.findViewById(R.id.list_item_pedido_nome_produto);
+            descricao = itemView.findViewById(R.id.list_item_pedido_descricao);
             quantidade = itemView.findViewById(R.id.list_item_pedido_quantidade);
-            nome = itemView.findViewById(R.id.list_item_pedido_nome_produto);
-            preco = itemView.findViewById(R.id.list_item_venda_preco);
         }
 
         public void vincula(ItemVenda itemVenda) {
@@ -73,9 +72,8 @@ public class ItemVendaAdapter extends RecyclerView.Adapter<ItemVendaAdapter.Hold
             Integer quantidadeEmTexo = itemVenda.getQuantidade();
 
             quantidade.setText(quantidadeEmTexo.toString());
-            nome.setText(itemVenda.getProduto().getNome());
-            preco.setText(new MoedaUtil().formataParaBrasileiro(itemVenda.getProduto().getValor()));
+            nomeProduto.setText(itemVenda.getProduto().getNome());
+            descricao.setText(itemVenda.getProduto().getDescricao());
         }
     }
 }
-

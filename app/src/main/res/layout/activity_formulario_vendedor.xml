@@ -13,7 +13,8 @@
         android:layout_margin="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <EditText
             android:id="@+id/formulario_vendedor_nome"
@@ -26,7 +27,8 @@
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/underline_preto"/>
 
 
     </android.support.design.widget.TextInputLayout>
@@ -49,7 +51,8 @@
             android:padding="8dp"
             android:textSize="24sp"
             android:inputType="number"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:background="@drawable/underline_preto"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button

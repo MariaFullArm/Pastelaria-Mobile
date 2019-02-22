@@ -53,7 +53,7 @@ public class MoneyTextWatcher implements TextWatcher {
         String cleanString = value.replaceAll(replaceable, "");
 
         return new BigDecimal(cleanString).setScale(
-                2, BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR
+                3, BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR
         );
     }
 }

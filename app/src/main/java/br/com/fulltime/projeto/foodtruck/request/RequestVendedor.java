@@ -77,7 +77,7 @@ public class RequestVendedor {
         });
     }
 
-    public void atualizaListaDeProdutos(final ListaVendedorAdapter adapter) {
+    public void atualizaListaDeVendedores(final ListaVendedorAdapter adapter) {
         Call<List<Vendedor>> call = service.lista();
         call.enqueue(new Callback<List<Vendedor>>() {
             @Override

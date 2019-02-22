@@ -3,6 +3,7 @@ package br.com.fulltime.projeto.foodtruck.ui.recyclerview.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +12,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.ItemVenda;
+import br.com.fulltime.projeto.foodtruck.modelo.Produto;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemVendaSelectedListener;
 import br.com.fulltime.projeto.foodtruck.util.MoedaUtil;
 
 public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAdapter.SelecaoProdutoViewHolder> {
 
     private final Context context;
-    private final List<ItemVenda> itemVendas;
+    private List<ItemVenda> itemVendas;
+    private List<ItemVenda> listaAuxiliar;
     private OnItemVendaSelectedListener onItemVendaSelectedListener;
 
-    public SelecaoProdutoAdapter(Context context, List<ItemVenda> itemVendas) {
+    public SelecaoProdutoAdapter(Context context) {
         this.context = context;
-        this.itemVendas = itemVendas;
+        this.itemVendas = new ArrayList<>();
     }
 
     public void setOnItemVendaSelectedListener(OnItemVendaSelectedListener onItemVendaSelectedListener) {
@@ -56,20 +56,43 @@ public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAd
         return itemVendas.size();
     }
 
-    public void ordenaTipo(String tipo) {
-        if (getItemCount() > 0) {
-            Comparador comparador = new Comparador();
-            Collections.sort(itemVendas, comparador);
-            int contadorDePosicoes = 0;
-            int posicaoParaTrocar = 0;
-            for (ItemVenda item : itemVendas) {
-                if (item.getProduto().getTipo() == tipo) {
-                    Collections.swap(itemVendas, contadorDePosicoes, posicaoParaTrocar);
-                    posicaoParaTrocar++;
+    public void substituiLista(List<Produto> produtos) {
+        if (produtos != null) {
+            itemVendas.clear();
+            notifyDataSetChanged();
+            for (int i = 0; i < produtos.size(); i++) {
+                itemVendas.add(new ItemVenda(produtos.get(i)));
+                notifyItemInserted(i);
+            }
+            listaAuxiliar = new ArrayList<>(itemVendas);
+        }
+    }
+
+    public void filtraListaDeExibicao(String tipo) {
+        if (tipo != null) {
+            itemVendas.clear();
+            if (listaAuxiliar != null) {
+                for (ItemVenda item : listaAuxiliar) {
+                    String tipoItem = item.getProduto().getTipo();
+                    if (tipoItem.equalsIgnoreCase(tipo)) {
+                        this.itemVendas.add(item);
+                    }
                 }
-                contadorDePosicoes++;
             }
             notifyDataSetChanged();
+        } else if (listaAuxiliar != null)
+            itemVendas = new ArrayList<>(listaAuxiliar);
+        notifyDataSetChanged();
+    }
+
+    public void trocaItens(List<ItemVenda> lista) {
+        for (ItemVenda aux : lista) {
+            for (int i = 0; i < listaAuxiliar.size(); i++) {
+                if(aux.getProduto().getId() == listaAuxiliar.get(i).getProduto().getId()){
+                    listaAuxiliar.set(i, aux);
+                    itemVendas.set(i, aux);
+                }
+            }
         }
     }
 
@@ -83,32 +106,18 @@ public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAd
         public SelecaoProdutoViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
             nome = itemView.findViewById(R.id.item_venda_nome_produto);
             spinner = itemView.findViewById(R.id.item_venda_spinner);
             preco = itemView.findViewById(R.id.item_venda_preco);
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int quantidade, long id) {
-                    onItemVendaSelectedListener.onItemVendaSelected(itemVenda, getAdapterPosition(), quantidade);
-                    itemVenda.setQuantidade(quantidade);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
 
         }
 
         public void vincula(ItemVenda itemVenda) {
             this.itemVenda = itemVenda;
-            preencheCampo(this.itemVenda);
+            preencheCampo();
         }
 
-        private void preencheCampo(ItemVenda itemVenda) {
+        private void preencheCampo() {
             nome.setText(itemVenda.getProduto().getNome());
             if (itemVenda.getProduto().getValor() != null) {
                 preco.setText(MoedaUtil.formataParaBrasileiro(itemVenda.getProduto().getValor()));
@@ -133,14 +142,23 @@ public class SelecaoProdutoAdapter extends RecyclerView.Adapter<SelecaoProdutoAd
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
             spinner.setSelection(itemVenda.getQuantidade());
-        }
-    }
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int quantidade, long id) {
+                    itemVenda.setQuantidade(quantidade);
+                    onItemVendaSelectedListener.onItemVendaSelected(itemVenda, quantidade);
 
-    public class Comparador implements Comparator<ItemVenda> {
+                    for (int i = 0; i < listaAuxiliar.size(); i++) {
+                        if (listaAuxiliar.get(i).getProduto().getId() == itemVenda.getProduto().getId())
+                            listaAuxiliar.set(i, itemVenda);
+                    }
+                }
 
-        @Override
-        public int compare(ItemVenda item1, ItemVenda item2) {
-            return item1.getProduto().getNome().compareTo(item2.getProduto().getNome());
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
         }
     }
 }

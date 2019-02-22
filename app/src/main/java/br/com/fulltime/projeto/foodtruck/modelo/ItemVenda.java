@@ -9,10 +9,9 @@ public class ItemVenda implements Serializable {
     private Venda venda;
     private int quantidade;
 
-    public ItemVenda(Produto produto, int quantidade) {
+    public ItemVenda(Produto produto) {
         this.produto = produto;
-
-        this.quantidade = quantidade;
+        quantidade = 0;
     }
 
     public int getId() {

@@ -1,7 +1,9 @@
 package br.com.fulltime.projeto.foodtruck.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -62,7 +64,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
                     Produto produto = criaProduto();
 
                     RequestProduto request = new RequestProduto(FormularioProdutoActivity.this);
-                    if (id >= 0){
+                    if (id >= 0) {
                         request.alteraProduto(produto, new RequestComunicador() {
                             @Override
                             public void comunica() {
@@ -70,8 +72,7 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
                                 finish();
                             }
                         });
-                    }
-                    else{
+                    } else {
                         request.insereProduto(produto, new RequestComunicador() {
                             @Override
                             public void comunica() {
@@ -95,31 +96,36 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private boolean ehFormularioDeProdutoValido() {
-        if (campoValor.length() < 1) {
-            Toast.makeText(FormularioProdutoActivity.this, "O campo Valor não foi preenchido", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        boolean bool = true;
         if (campoNome.length() < 1) {
+            campoNome.setBackgroundResource(R.drawable.underline_vermelho);
             Toast.makeText(FormularioProdutoActivity.this, "O campo Nome não foi preenchido", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+            bool = false;
+        } else
+            campoNome.setBackgroundResource(R.drawable.underline_preto);
+
         String valorString = campoValor.getText().toString();
-        BigDecimal valorReal = MoedaUtil.validaMoeda(valorString);
-        if(valorReal== BigDecimal.ZERO){
-            Toast.makeText(FormularioProdutoActivity.this, "Valor não pode ser zero", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
+        BigDecimal valorReal = MoedaUtil.validaMoedaEditText(valorString);
+        if (valorReal == BigDecimal.ZERO) {
+            campoValor.setBackgroundResource(R.drawable.underline_vermelho);
+            Toast.makeText(FormularioProdutoActivity.this, "O campo Valor não foi preenchido", Toast.LENGTH_SHORT).show();
+            bool = false;
+        }else
+            campoValor.setBackgroundResource(R.drawable.underline_preto);
+        return bool;
     }
 
     private Produto criaProduto() {
         Produto produto = new Produto();
         produto.setTipo(string);
-        produto.setNome(campoNome.getText().toString());
+        String nome = campoNome.getText().toString().toUpperCase();
+        String nomeFormatado = nome.substring(0, 1) + nome.substring(1).toLowerCase();
+        produto.setNome(nomeFormatado);
         produto.setDescricao(campoDescricao.getText().toString());
         String valor = campoValor.getText().toString();
-        produto.setValor(MoedaUtil.validaMoeda(valor));
+        produto.setValor(MoedaUtil.validaMoedaEditText(valor));
         produto.setId(id);
 
         return produto;
@@ -155,6 +161,8 @@ public class FormularioProdutoActivity extends AppCompatActivity implements Adap
         campoNome.setText(produto.getNome());
         campoValor.setText(produto.getValor().toString());
         campoDescricao.setText(produto.getDescricao());
+        if (produto.getTipo().equalsIgnoreCase("bebida"))
+            spinnerTipo.setSelection(1);
     }
 
     @Override

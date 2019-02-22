@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.util.List;
-
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.request.RequestVendedor;
@@ -31,7 +29,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.exibirProgressMain;
-import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.setSwipeRefreshingMain;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.setSwipeStatusMain;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.swipeMain;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.CODIGO_DE_REQUISICAO_ALTERA_VENDEDOR;
@@ -70,7 +67,7 @@ public class ListaVendedoresFragment extends MainFragment {
     }
 
     private void atualizaListaDeVendedores() {
-        new RequestVendedor(getContext()).atualizaListaDeProdutos(adapter);
+        new RequestVendedor(getContext()).atualizaListaDeVendedores(adapter);
     }
 
     private void configuraRecyclerView(View view) {

@@ -84,16 +84,22 @@ public class FormularioVendedorActivity extends AppCompatActivity {
     }
 
     private boolean ehFormularioDeVendedorValido() {
+        boolean bool = true;
         if (campoNome.length() < 1) {
             Toast.makeText(FormularioVendedorActivity.this, "Nome não foi prenchido", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+            campoNome.setBackgroundResource(R.drawable.underline_vermelho);
+            bool = false;
+        }else
+            campoNome.setBackgroundResource(R.drawable.underline_preto);
+
         if (campoCPF.length() < 14) {
             Toast.makeText(FormularioVendedorActivity.this, "CPF não foi prenchido corretamente", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+            campoCPF.setBackgroundResource(R.drawable.underline_vermelho);
+            bool = false;
+        }else
+            campoCPF.setBackgroundResource(R.drawable.underline_preto);
 
-        return true;
+        return bool;
     }
 
     @NonNull

@@ -13,7 +13,6 @@
         android:fontFamily="@font/berkshire_swash"
         android:text="Lista de Vendedores-"
         android:textColor="@color/corDoTextoPersonalizado"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textSize="26sp" />
 
 </LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fff082</color>
-    <color name="colorPrimaryDark">#fff082</color>
-    <color name="colorAccent">#FF008577</color>
-    <color name="corDoTextoPersonalizado">#fc3637</color>
+    <color name="colorPrimary">#fbe285</color>
+    <color name="colorPrimaryDark">#fbe285</color>
+    <color name="colorAccent">#008577</color>
+    <color name="corDoTextoPersonalizado">#EC423E</color>
 </resources>

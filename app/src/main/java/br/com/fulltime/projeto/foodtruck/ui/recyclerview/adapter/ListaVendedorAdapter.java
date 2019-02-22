@@ -83,7 +83,7 @@ public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdap
         public VendedorViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            nome = itemView.findViewById(R.id.item_vendedor_tipo);
+            nome = itemView.findViewById(R.id.item_vendedor_nome);
             cpf = itemView.findViewById(R.id.item_vendedor_cpf);
             mais = itemView.findViewById(R.id.item_vendedor_mais);
             itemView.setOnClickListener(new View.OnClickListener() {

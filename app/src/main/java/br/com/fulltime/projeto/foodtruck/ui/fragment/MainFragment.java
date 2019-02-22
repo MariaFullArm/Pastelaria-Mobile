@@ -20,6 +20,7 @@ import br.com.fulltime.projeto.foodtruck.ui.activity.FormularioVendedorActivity;
 import br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity;
 
 import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.exibirProgressMain;
+import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.setSwipeRefreshingMain;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.MainActivity.setSwipeStatusMain;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.ProdutoConstantes.*;
 import static br.com.fulltime.projeto.foodtruck.ui.activity.constantes.VendedorConstantes.*;
@@ -35,6 +36,7 @@ public class MainFragment extends Fragment {
         configuraBotoes(view);
 
         setSwipeStatusMain(false);
+        exibirProgressMain(false);
 
         return view;
     }

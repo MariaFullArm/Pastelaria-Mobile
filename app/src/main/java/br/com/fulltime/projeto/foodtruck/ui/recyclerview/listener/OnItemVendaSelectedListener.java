@@ -4,6 +4,6 @@ import br.com.fulltime.projeto.foodtruck.modelo.ItemVenda;
 
 public interface OnItemVendaSelectedListener {
 
-    void onItemVendaSelected(ItemVenda item, int posicao, int quantidade);
+    void onItemVendaSelected(ItemVenda item, int quantidade);
 
 }

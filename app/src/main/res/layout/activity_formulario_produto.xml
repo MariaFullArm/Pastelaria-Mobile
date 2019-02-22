@@ -14,7 +14,8 @@
         android:gravity="center"
         android:padding="8dp"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Spinner
         android:id="@+id/formulario_produto_tipo"
@@ -23,7 +24,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/text"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/text"/>
+        app:layout_constraintBottom_toBottomOf="@id/text"
+        android:background="@drawable/underline_preto"/>
 
     <EditText
         android:id="@+id/formulario_produto_nome"
@@ -34,6 +36,8 @@
         android:inputType="text"
         android:maxLength="60"
         android:textSize="24dp"
+        android:background="@drawable/underline_preto"
+        android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="@id/formulario_produto_tipo"
         app:layout_constraintStart_toStartOf="@id/formulario_produto_tipo"
         app:layout_constraintTop_toBottomOf="@id/formulario_produto_tipo" />
@@ -45,15 +49,18 @@
         android:layout_marginTop="15dp"
         android:hint="R$0,00"
         android:inputType="numberDecimal"
+        android:textColorLink="@color/colorAccent"
         android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="@id/formulario_produto_nome"
+        android:background="@drawable/underline_preto"
+        android:paddingBottom="8dp"
+        app:layout_constraintStart_toStartOf="@+id/formulario_produto_nome"
         app:layout_constraintTop_toBottomOf="@id/formulario_produto_nome" />
 
     <EditText
         android:id="@+id/formulario_produto_descricao"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="15dp"
+        android:layout_margin="8dp"
         android:gravity="top"
         android:hint="Descrição"
         android:padding="8dp"
