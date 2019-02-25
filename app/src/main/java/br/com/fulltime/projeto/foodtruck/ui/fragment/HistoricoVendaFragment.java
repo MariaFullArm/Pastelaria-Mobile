@@ -43,11 +43,9 @@ public class HistoricoVendaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_historico_venda, container, false);
 
-        ((MainActivity) getActivity()).setToolbarTiltle("Historico de Venda");
+        ((MainActivity) getActivity()).setToolbarTiltle("Historico de Vendas");
 
         configuraRecyclerView(view);
-
-        Call<List<Venda>> call = new RetrofitConfig().getVendaService().lista();
 
         configuraSpinner(view);
 

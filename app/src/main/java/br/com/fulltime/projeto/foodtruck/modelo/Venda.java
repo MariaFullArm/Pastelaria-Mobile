@@ -15,7 +15,6 @@ public class Venda implements Serializable {
     private int id_vendedor;
     private boolean status;
     private Date data_venda;
-    private Long data = new Long(0);
 
     public int getId() {
         return id;
@@ -62,6 +61,11 @@ public class Venda implements Serializable {
     }
 
     public void setData_venda(Date data_venda) {
+        long tempo = data_venda.getTime() + 86400000;
+        this.data_venda = new Date(tempo);
+    }
+
+    public void setData(Date data_venda) {
         this.data_venda = data_venda;
     }
 

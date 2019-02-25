@@ -281,7 +281,7 @@ public class FormularioVendaFragment extends Fragment {
                 }
             }
         }
-        venda.setData_venda(new DataUtil().converteParaDataApi(calendar.getTime()));
+        venda.setData(new DataUtil().converteParaDataApi(calendar.getTime()));
 
         return venda;
     }
