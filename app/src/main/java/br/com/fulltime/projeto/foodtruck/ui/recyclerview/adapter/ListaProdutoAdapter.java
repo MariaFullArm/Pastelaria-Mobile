@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.fulltime.projeto.foodtruck.util.Dialog;
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerProduto;
@@ -55,6 +56,9 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
 
     public void substituiLista(List<Produto> produtos) {
         this.produtos = produtos;
+        if (produtos.size() == 0) {
+            new Dialog(context).alertaProduto();
+        }
         notifyDataSetChanged();
     }
 

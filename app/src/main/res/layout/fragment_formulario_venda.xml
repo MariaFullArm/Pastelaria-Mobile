@@ -92,7 +92,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                android:hint="Data"
                 android:inputType="none"
                 android:textSize="20sp"
                 tools:text="11/20/2014"

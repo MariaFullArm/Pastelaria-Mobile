@@ -76,6 +76,7 @@ public class FormularioVendaFragment extends Fragment {
         inicializaCampos(view);
         Bundle arguments = getArguments();
 
+        venda.setId(-1);
         if (arguments != null) {
             if (arguments.getSerializable("venda") != null) {
                 venda = (Venda) arguments.getSerializable("venda");
@@ -158,7 +159,7 @@ public class FormularioVendaFragment extends Fragment {
             public void onClick(View v) {
                 final Venda vendaCriada = criaVenda();
 
-                if (venda.getId() == 0) {
+                if (venda.getId() < 0) {
                     Call<Venda> call = new RetrofitConfig().getVendaService().insere(vendaCriada);
                     call.enqueue(new Callback<Venda>() {
                         @Override
@@ -185,7 +186,7 @@ public class FormularioVendaFragment extends Fragment {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
-                                unirItensVendidosNaVenda(vendaCriada);
+                                excluirItemVendidoDaVenda(vendaCriada);
                             } else try {
                                 JSONObject jObjError = new JSONObject(response.errorBody().string());
                                 Toast.makeText(getContext(), jObjError.getString("erro"), Toast.LENGTH_LONG).show();
@@ -205,54 +206,79 @@ public class FormularioVendaFragment extends Fragment {
         });
     }
 
+    private void excluirItemVendidoDaVenda(final Venda vendaCriada) {
+        Call<ResponseBody> call = new RetrofitConfig().getItemService().deletaItensDaVenda(venda.getId());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    unirItensVendidosNaVenda(vendaCriada);
+                } else try {
+                    JSONObject jObjError = new JSONObject(response.errorBody().string());
+                    Toast.makeText(getContext(), jObjError.getString("erro"), Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void unirItensVendidosNaVenda(Venda vendaRecebida) {
         for (ItemVenda itemVenda : itensVenda) {
             itemVenda.setVenda(vendaRecebida);
         }
-        if (venda.getId() == 0) {
-            Call<ResponseBody> call = new RetrofitConfig().getItemService().insere(itensVenda);
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        if (venda.getId() == 0) {
-                            Toast.makeText(getContext(), "Venda realizada com sucesso", Toast.LENGTH_SHORT).show();
-                            FragmentManager manager = getFragmentManager();
-                            FragmentTransaction tx = manager.beginTransaction();
-                            HistoricoVendaFragment fragment = new HistoricoVendaFragment();
-                            tx.replace(R.id.frame_main, fragment);
-                            tx.commit();
-                        } else {
-                            Toast.makeText(getContext(), "Venda Modificada com sucesso", Toast.LENGTH_SHORT).show();
-                            getFragmentManager().popBackStack();
-                        }
-
-                    } else try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getContext(), jObjError.getString("erro"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        Call<ResponseBody> call = new RetrofitConfig().getItemService().insere(itensVenda);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (venda.getId() < 0) {
+                        Toast.makeText(getContext(), "Venda realizada com sucesso", Toast.LENGTH_SHORT).show();
+                        FragmentManager manager = getFragmentManager();
+                        FragmentTransaction tx = manager.beginTransaction();
+                        HistoricoVendaFragment fragment = new HistoricoVendaFragment();
+                        tx.replace(R.id.frame_main, fragment);
+                        tx.commit();
+                    } else {
+                        Toast.makeText(getContext(), "Venda Modificada com sucesso", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().popBackStack();
                     }
+
+                } else try {
+                    JSONObject jObjError = new JSONObject(response.errorBody().string());
+                    Toast.makeText(getContext(), jObjError.getString("erro"), Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                }
-            });
-        }else{
+            }
+        });
 
-
-        }
     }
 
     private Venda criaVenda() {
         venda.setTotal(validaMoeda(total.getText().toString()));
         venda.setObservacoes(observacoes.getText().toString());
 
-        for (Vendedor vendedor : vendedores) {
-            if (vendedor.getCpf().equals(cpfVendedor)) {
-                venda.setId_vendedor(vendedor.getId());
+        if(itensVenda.size() == 0)
+            total.setBackgroundResource(R.drawable.underline_vermelho);
+
+        if (vendedores.size() == 0) {
+            spinnerDeVendedor.setBackgroundResource(R.drawable.underline_vermelho);
+        } else {
+            for (Vendedor vendedor : vendedores) {
+                if (vendedor.getCpf().equals(cpfVendedor)) {
+                    venda.setId_vendedor(vendedor.getId());
+                }
             }
         }
         venda.setData_venda(new DataUtil().converteParaDataApi(calendar.getTime()));
@@ -349,7 +375,7 @@ public class FormularioVendaFragment extends Fragment {
             calendar.setTime(venda.getData_venda());
         }
         String dataFormatada = DataUtil.formataCalendar(calendar);
-        data.setText(dataFormatada.replace("-", "/"));
+        data.setText(dataFormatada);
         adicionaCalendario();
     }
 

@@ -1,4 +1,4 @@
-package br.com.fulltime.projeto.foodtruck;
+package br.com.fulltime.projeto.foodtruck.util;
 
 import android.text.Editable;
 import android.text.TextWatcher;

@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
@@ -21,7 +23,6 @@ import br.com.fulltime.projeto.foodtruck.modelo.Venda;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.retrofit.RetrofitConfig;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerHistorico;
-import br.com.fulltime.projeto.foodtruck.util.MoedaUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -131,7 +132,7 @@ public class HistoricoVendaAdapter extends RecyclerView.Adapter<HistoricoVendaAd
                         }
                     });
                     Menu menu = popup.getMenu();
-                    if(venda.isStatus()){
+                    if (venda.isStatus()) {
                         menu.findItem(R.id.historico_finalizar).setTitle("Desfazer");
                         menu.findItem(R.id.historico_editar).setEnabled(false);
                     }
@@ -154,13 +155,15 @@ public class HistoricoVendaAdapter extends RecyclerView.Adapter<HistoricoVendaAd
                             nomeVendedor.setText(vendedor.getNome());
                     }
             }
-            dataVenda.setText(venda.getData_venda().toString().replace("-", "/"));
+
+            Date date = new Date(venda.getData_venda().getTime());
+            dataVenda.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
+
             precoVenda.setText(formataParaBrasileiro(venda.getTotal()));
             ConstraintLayout contraint = itemView.findViewById(R.id.item_historico_constraint);
             if (venda.isStatus() == false) {
                 contraint.setBackgroundResource(R.drawable.borda_pendente);
-            }
-            else{
+            } else {
                 contraint.setBackgroundResource(R.drawable.borda_finalizada);
             }
         }

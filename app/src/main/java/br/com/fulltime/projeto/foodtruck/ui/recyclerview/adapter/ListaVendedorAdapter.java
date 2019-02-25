@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.fulltime.projeto.foodtruck.util.Dialog;
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Vendedor;
 import br.com.fulltime.projeto.foodtruck.ui.recyclerview.listener.OnItemClickListenerVendedor;
@@ -30,7 +31,7 @@ public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdap
         this.vendedores = new ArrayList<>();
     }
 
-    public void setOnItemClickListenerVendedor(OnItemClickListenerVendedor onItemClickListenerVendedor){
+    public void setOnItemClickListenerVendedor(OnItemClickListenerVendedor onItemClickListenerVendedor) {
         this.onItemClickListenerVendedor = onItemClickListenerVendedor;
     }
 
@@ -70,6 +71,9 @@ public class ListaVendedorAdapter extends RecyclerView.Adapter<ListaVendedorAdap
 
     public void substituiLista(List<Vendedor> vendedores) {
         this.vendedores = vendedores;
+        if (vendedores.size() == 0) {
+            new Dialog(context).alertaVendedor();
+        }
         notifyDataSetChanged();
     }
 

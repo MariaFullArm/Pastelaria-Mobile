@@ -3,7 +3,6 @@ package br.com.fulltime.projeto.foodtruck.ui.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import br.com.fulltime.projeto.foodtruck.MoneyTextWatcher;
+import br.com.fulltime.projeto.foodtruck.util.MoneyTextWatcher;
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Produto;
 import br.com.fulltime.projeto.foodtruck.request.RequestComunicador;

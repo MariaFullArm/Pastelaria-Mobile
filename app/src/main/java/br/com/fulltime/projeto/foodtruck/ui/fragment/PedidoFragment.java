@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.fulltime.projeto.foodtruck.R;
@@ -110,7 +112,8 @@ public class PedidoFragment extends Fragment {
             if (arguments.getSerializable("venda") != null) {
                 venda = (Venda) arguments.getSerializable("venda");
 
-                data.setText(venda.getData_venda().toString());
+                Date date = new Date(venda.getData_venda().getTime());
+                data.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
                 atualizaTextoDoBotao();
                 preencheNomeVendedor();
 

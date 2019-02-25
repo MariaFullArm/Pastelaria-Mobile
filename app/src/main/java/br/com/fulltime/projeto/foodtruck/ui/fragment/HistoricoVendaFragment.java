@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.fulltime.projeto.foodtruck.util.Dialog;
 import br.com.fulltime.projeto.foodtruck.R;
 import br.com.fulltime.projeto.foodtruck.modelo.Venda;
 import br.com.fulltime.projeto.foodtruck.retrofit.RetrofitConfig;
@@ -47,7 +48,6 @@ public class HistoricoVendaFragment extends Fragment {
         configuraRecyclerView(view);
 
         Call<List<Venda>> call = new RetrofitConfig().getVendaService().lista();
-        call.enqueue(callBackLista());
 
         configuraSpinner(view);
 
@@ -104,10 +104,11 @@ public class HistoricoVendaFragment extends Fragment {
             public void onResponse(Call<List<Venda>> call, Response<List<Venda>> response) {
                 if (response.isSuccessful()) {
                     List<Venda> body = response.body();
-                    if (!body.isEmpty()) {
+                    if (body != null) {
                         adapter.subtituiLista(body);
-                    } else
-                        adapter.subtituiLista(new ArrayList<Venda>());
+                        if (body.size() == 0)
+                            new Dialog(getContext()).alertaHistorico();
+                    }
                 } else try {
                     JSONObject jObjError = new JSONObject(response.errorBody().string());
                     Toast.makeText(getContext(), jObjError.getString("erro"), Toast.LENGTH_LONG).show();

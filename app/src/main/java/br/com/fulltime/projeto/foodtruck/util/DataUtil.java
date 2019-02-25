@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class DataUtil {
 
     public static final SimpleDateFormat FORMATO_UNIVERSAL = new SimpleDateFormat("yyyyMMdd");
-    public static final SimpleDateFormat FORMATO_UNIVERSAL2 = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat FORMATO_UNIVERSAL2 = new SimpleDateFormat("dd/MM/yyyy");
 
     public static String formataCalendar(Calendar calendar) {
         return FORMATO_UNIVERSAL2.format(calendar.getTime());

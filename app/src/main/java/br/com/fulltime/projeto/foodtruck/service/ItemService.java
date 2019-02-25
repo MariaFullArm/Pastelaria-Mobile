@@ -7,6 +7,7 @@ import br.com.fulltime.projeto.foodtruck.modelo.ItemVendidoAPI;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -18,4 +19,7 @@ public interface ItemService {
 
     @GET("itensvendidos/{id}")
     Call<List<ItemVendidoAPI>> listaDeItem(@Path("id") int idVenda);
+
+    @DELETE("itensvendidos/{id}")
+    Call<ResponseBody> deletaItensDaVenda(@Path("id") int idVenda);
 }

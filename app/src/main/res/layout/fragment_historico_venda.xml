@@ -11,10 +11,18 @@
         android:layout_height="50dp"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@id/historico_venda_spinner" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/historico_venda_recycleview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="1dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/historico_venda_spinner"
