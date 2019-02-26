@@ -89,7 +89,7 @@ public class ListaProdutoAdapter extends RecyclerView.Adapter<ListaProdutoAdapte
                 public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(context, mais);
 
-                    popup.inflate(R.menu.menu_opcao_produtos);
+                    popup.inflate(R.menu.menu_opcao_deletar);
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {

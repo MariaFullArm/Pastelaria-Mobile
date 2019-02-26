@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:gravity="end"
-            android:textColor="#FF00CF08"
+            android:textColor="#46AF3F"
             android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/item_historico_data"

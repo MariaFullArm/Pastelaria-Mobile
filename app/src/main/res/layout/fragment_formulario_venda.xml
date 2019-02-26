@@ -86,19 +86,17 @@
             android:padding="8dp"
             app:layout_constraintTop_toBottomOf="@id/formulario_venda_spinner_vendedor" />
 
-
-            <EditText
-                android:id="@+id/formulario_venda_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:inputType="none"
-                android:textSize="20sp"
-                tools:text="11/20/2014"
-                android:layout_margin="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/formulario_venda_observacoes"/>
-
+        <EditText
+            android:id="@+id/formulario_venda_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none"
+            android:textSize="20sp"
+            tools:text="11/20/2014"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/formulario_venda_observacoes"/>
 
         <TextView
             android:id="@+id/formulario_venda_total"
